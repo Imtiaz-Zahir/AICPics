@@ -3,14 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model image {
   id        String   @id @unique
   url       String   @unique
-  prompt    String
+  prompt    String   @db.LongText
   height    Int
   width     Int
   size      Int
