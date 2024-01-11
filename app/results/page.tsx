@@ -18,7 +18,7 @@ export default async function page({searchParams}: {searchParams: any}) {
       return <p className="text-center p-20">No image found</p>
     }
     for (let i = 0; i < photos.length; i++) {
-      imagesArray[i % 3].push(photos[i]);
+      imagesArray[i % imagesArray.length].push(photos[i]);
     }
   } catch (error) {
     console.error(error);

@@ -10,10 +10,10 @@ export default async function page() {
     await prisma.$connect();
     const photos = await prisma.image.findMany({
       select: { prompt: true, url: true },
-      take: 30
+      take: 30,
     });
     for (let i = 0; i < photos.length; i++) {
-      imagesArray[i % 3].push(photos[i]);
+      imagesArray[i % imagesArray.length].push(photos[i]);
     }
   } catch (error) {
     console.error(error);

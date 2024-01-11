@@ -10,7 +10,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "AI Photos",
-  description: "Explore an extensive collection of exclusively AI-generated photos.",
+  description: "Over 20 million free AI-generated photos available for download.",
 };
 
 export default function RootLayout({

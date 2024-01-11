@@ -14,13 +14,13 @@ export default function Nav() {
     }
   }
   return (
-    <nav className="flex items-center justify-between py-3 px-20 fixed w-full bg-black">
+    <nav className="flex items-center justify-between py-3 px-20 fixed w-full bg-black z-50">
       <Link href="/" className="font-medium text-3xl">AI Photos</Link>
       <form className="flex items-center relative" onSubmit={handleSubmit}>
         <input
           type="text"
           name="search"
-          placeholder="Search"
+          placeholder="I'm looking for..."
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           className="h-10 rounded-full px-5 py-2 bg-black focus:outline-none border bg-transparent text-lg"
