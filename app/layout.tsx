@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import {Contex} from "./Contex";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700", "900"],
@@ -10,7 +11,8 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "AI Photos",
-  description: "Over 20 million free AI-generated photos available for download.",
+  description:
+    "Over 20 million free AI-generated photos available for download.",
 };
 
 export default function RootLayout({
@@ -19,10 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="bg-black text-white">
+    <html lang="en" className="bg-primary text-secondary">
       <body className={roboto.className}>
-        <Nav />
-        {children}
+        <Contex>
+          <Nav />
+          {children}
+        </Contex>
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+'use server'
 import React from "react";
 import { PrismaClient } from '@prisma/client'
 import Gallery from "@/components/Gallery";
@@ -10,7 +11,7 @@ export default async function page() {
     await prisma.$connect();
     const photos = await prisma.image.findMany({
       select: { prompt: true, url: true },
-      take: 30,
+      // take: 30,
     });
     for (let i = 0; i < photos.length; i++) {
       imagesArray[i % imagesArray.length].push(photos[i]);

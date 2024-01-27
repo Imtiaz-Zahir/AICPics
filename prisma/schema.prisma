@@ -7,6 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model user {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  likes     like[]
+}
+
 model image {
   id        String   @id @unique
   url       String   @unique
@@ -16,4 +26,25 @@ model image {
   size      Int
   channelId String
   createdAt DateTime
+  likes     like[]
+}
+
+model serch {
+  id        String   @id @default(uuid())
+  query     String   @unique
+  total     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
+
+model like {
+  id        String   @id @default(uuid())
+  userId    String
+  imageId   String
+  user      user     @relation(fields: [userId], references: [id])
+  image     image    @relation(fields: [imageId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@unique([userId, imageId])
 }

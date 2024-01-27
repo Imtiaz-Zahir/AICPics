@@ -13,29 +13,32 @@ export default function Gallery({
           {images.map((image, i) => (
             <div
               key={i}
-              className="rounded-lg border border-gray-300 overflow-hidden max-w-[450px] w-full relative hover:scale-105 transition-all duration-300"
+              className="rounded-lg imageShadow overflow-hidden w-full relative"
             >
               <Image
+                className="hover:scale-105 transition-all duration-300"
                 src={image.url}
                 height={450}
                 width={450}
                 alt={image.prompt}
               />
-              <div className="absolute bottom-0 flex items-center justify-between w-full px-5 py-3">
+              <div className="absolute bottom-0 flex items-center justify-between w-full px-5 py-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   data-name="Layer 1"
                   viewBox="0 0 24 24"
-                  className="w-12 h-12"
+                  // onClick={() => {}}
+                  className="w-12 h-12 cursor-pointer"
+                  fill="#F05454"
                 >
                   <path d="M16.24 3A6 6 0 0 0 12 4.76a6 6 0 1 0-8.49 8.48L12 21.73l8.49-8.49A6 6 0 0 0 16.24 3Zm2.83 8.83L12 18.9l-7.07-7.07a4 4 0 1 1 5.66-5.66L12 7.59l1.41-1.41a4.1 4.1 0 0 1 5.66 0 4 4 0 0 1 0 5.66Z"></path>
                 </svg>
-                <button className="border border-gray-300 rounded-full px-5 py-3 hover:bg-gray-900 transition-all uppercase font-bold inline-flex items-center gap-2">
+                <button className="border border-secondary rounded-full px-5 py-3 transition-all uppercase font-medium inline-flex items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     className="w-5 h-5"
-                    fill="#FFF"
+                    fill="#F5F5F5"
                   >
                     <g data-name="Layer 2">
                       <g data-name="download">
