@@ -13,7 +13,7 @@ model user {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
   likes     like[]
 }
 
@@ -34,7 +34,7 @@ model serch {
   query     String   @unique
   total     Int      @default(1)
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 }
 
 model like {
@@ -44,7 +44,7 @@ model like {
   user      user     @relation(fields: [userId], references: [id])
   image     image    @relation(fields: [imageId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 
   @@unique([userId, imageId])
 }

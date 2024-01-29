@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    await prisma.$connect();
 
     const prevesQuerys = await prisma.serch.findMany({
       where: { query: { startsWith: query } },
@@ -37,7 +36,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await prisma.$connect();
     const search = await prisma.serch.findFirst({
       where: { query },
       select: { id: true, total: true },
@@ -49,7 +47,7 @@ export async function POST(req: NextRequest) {
         data: { total: search.total + 1 },
       });
     } else {
-      await prisma.serch.create({ data: { query } });
+      await prisma.serch.create({data:{query}})
     }
     return new Response ('success')
   } catch (error) {
