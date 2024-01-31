@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-
     const prevesQuerys = await prisma.serch.findMany({
       where: { query: { startsWith: query } },
       select: { query: true },
@@ -21,17 +20,17 @@ export async function GET(req: NextRequest) {
     });
     const suggestions = prevesQuerys.map(({ query }) => query);
 
-    return NextResponse.json(suggestions);
+    return Response.json(suggestions);
   } catch (error) {
     return new Response("Somthing want wrong!", { status: 500 });
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("query");
 
-  if(!query){
+  if (!query) {
     return new Response("Missing query", { status: 400 });
   }
 
@@ -47,9 +46,9 @@ export async function POST(req: NextRequest) {
         data: { total: search.total + 1 },
       });
     } else {
-      await prisma.serch.create({data:{query}})
+      await prisma.serch.create({ data: { query } });
     }
-    return new Response ('success')
+    return new Response("success");
   } catch (error) {
     return new Response("Somthing want wrong!", { status: 500 });
   }

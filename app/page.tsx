@@ -1,26 +1,19 @@
-'use server'
+"use server";
 import React from "react";
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
 import Gallery from "@/components/Gallery";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default async function page() {
-  const imagesArray: { prompt: string; url: string }[][] = [[], [], []];
+  // const imagesArray: { prompt: string; url: string }[][] = [[], [], [], []];
   try {
-    await prisma.$connect();
     const photos = await prisma.image.findMany({
-      select: { prompt: true, url: true },
+      select: { id:true ,prompt: true, url: true },
       // take: 30,
     });
-    for (let i = 0; i < photos.length; i++) {
-      imagesArray[i % imagesArray.length].push(photos[i]);
-    }
+    return <Gallery images={photos} />;
   } catch (error) {
     console.error(error);
-  } finally {
-    await prisma.$disconnect();
   }
-
-  return <Gallery imagesArray={imagesArray} />;
 }
