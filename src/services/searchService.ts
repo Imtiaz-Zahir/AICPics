@@ -6,8 +6,13 @@ function createSearch(data: Prisma.searchCreateInput) {
   return prisma.search.create({ data });
 }
 
-function getSearches(where: Prisma.searchWhereInput) {
-  return prisma.search.findMany({ where });
+function getSearches(where?: Prisma.searchWhereInput) {
+  return prisma.search.findMany({
+    where,
+    take: 5,
+    orderBy: { total: "asc" },
+    select: { query: true },
+  });
 }
 
 function getSearch(where: Prisma.searchWhereUniqueInput) {

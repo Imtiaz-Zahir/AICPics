@@ -6,7 +6,7 @@ function createUser(data: Prisma.userCreateInput) {
   return prisma.user.create({ data });
 }
 
-function getUsers(where: Prisma.userWhereInput) {
+function getUsers(where?: Prisma.userWhereInput) {
   return prisma.user.findMany({ where });
 }
 

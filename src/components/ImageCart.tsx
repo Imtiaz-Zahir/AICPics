@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import SetFavorite from "./SetFavorite";
+import Favorite from "./Favorite";
 
 export default function ImageCart({
   imageId,
@@ -14,15 +14,17 @@ export default function ImageCart({
 }) {
   return (
     <div className="rounded-lg border border-secondary overflow-hidden w-full relative group">
-      <Image
-        className="group-hover:scale-105 transition-all duration-300"
-        src={url}
-        height={450}
-        width={450}
-        alt={prompt}
-      />
+      <Link href={`/images/${imageId}`}>
+        <Image
+          className="group-hover:scale-105 transition-all duration-300"
+          src={url}
+          height={450}
+          width={450}
+          alt={prompt}
+        />
+      </Link>
       <div className="absolute -top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">
-        <SetFavorite imageId={imageId} />
+        <Favorite imageId={imageId} />
 
         <Link href={`/api/image?download=${url}`} download={true}>
           <svg

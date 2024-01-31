@@ -6,7 +6,7 @@ function createFavorite(data: Prisma.favoriteCreateInput) {
   return prisma.favorite.create({ data });
 }
 
-function getFavorites(where: Prisma.favoriteWhereInput) {
+function getFavorites(where?: Prisma.favoriteWhereInput) {
   return prisma.favorite.findMany({ where });
 }
 

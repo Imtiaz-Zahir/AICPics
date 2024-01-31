@@ -1,18 +1,29 @@
 "use server";
 import React from "react";
-import { PrismaClient } from "@prisma/client";
-import Gallery from "@/components/Gallery";
-
-const prisma = new PrismaClient();
+import ImageCart from "@/components/ImageCart";
+import { getImages } from "@/services/imageService";
 
 export default async function page() {
-  // const imagesArray: { prompt: string; url: string }[][] = [[], [], [], []];
   try {
-    const photos = await prisma.image.findMany({
-      select: { id:true ,prompt: true, url: true },
-      // take: 30,
-    });
-    return <Gallery images={photos} />;
+    const photos = await getImages();
+
+    return (
+      <section className="p-20">
+        <h1 className="text-4xl font-semibold my-8">Most Downloaded Photos</h1>
+        <div className="grid grid-cols-4 gap-5">
+        {photos.map(
+          (image: { id: string; url: string; prompt: string }, index: any) => (
+            <ImageCart
+              key={index}
+              imageId={image.id}
+              url={image.url}
+              prompt={image.prompt}
+            />
+          )
+        )}
+        </div>
+      </section>
+    );
   } catch (error) {
     console.error(error);
   }

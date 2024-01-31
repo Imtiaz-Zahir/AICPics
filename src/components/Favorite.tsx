@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import { useContext, useState } from "react";
+import { likeContex } from "@/app/Contex";
 
-export default function SetFavorite({ imageId }: { imageId: string }) {
+export default function Favorite({ imageId }: { imageId: string }) {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const contex = useContext(likeContex);
+
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      data-name="Layer 1"
       viewBox="0 0 24 24"
       onClick={() => {
         console.log(imageId);

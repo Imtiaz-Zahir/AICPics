@@ -1,28 +1,25 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { suggestionsAction } from "@/actions/suggestionAction";
+import Link from "next/link";
 
 export default function Search() {
   const [search, setSearch] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
+  const [isFocused, setIsFocused] = useState(false);
   const router = useRouter();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (search.length > 0) {
       router.push(`/images?search=${search}`);
-
-      fetch(`/api/search?query=${search}`, {
-        method: "put",
-      }).catch((err) => console.log(err));
     }
   }
 
   useEffect(() => {
     if (search.length > 0) {
-      fetch(`/api/search?query=${search}`, { next: { revalidate: 3600 } }).then(
-        async (res) => setSearchSuggestions(await res.json())
-      );
+      suggestionsAction(search).then((res) => setSearchSuggestions(res));
     } else {
       setSearchSuggestions([]);
     }
@@ -34,6 +31,8 @@ export default function Search() {
         type="text"
         name="search"
         placeholder="I'm looking for..."
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         value={search}
         onChange={(event) => setSearch(event.target.value)}
         className="h-10 rounded-full px-5 py-2 w-full focus:outline-none border border-secondary bg-transparent text-lg"
@@ -44,14 +43,16 @@ export default function Search() {
           <path d="M26.146 27.146a.997.997 0 0 1-.707-.293l-7.694-7.694a.999.999 0 1 1 1.414-1.414l7.694 7.694a.999.999 0 0 1-.707 1.707z"></path>
         </svg>
       </button>
-      {searchSuggestions.length > 0 && (
-        <ul className="absolute top-12 w-full bg-[#222222] rounded-xl text-lg">
+      {isFocused && searchSuggestions.length > 0 && (
+        <ul className="absolute top-12 w-full bg-[#222222] rounded-xl text-lg overflow-hidden">
           {searchSuggestions.map((suggestion, index) => (
             <li
               key={index}
               className="hover:bg-[#363636] px-5 py-1 font-medium"
             >
-              {suggestion}
+              <Link href={`/images?search=${suggestion}`}>
+                {suggestion}
+              </Link>
             </li>
           ))}
         </ul>

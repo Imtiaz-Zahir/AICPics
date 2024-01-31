@@ -1,7 +1,13 @@
+'use server'
 import React from 'react'
+import Image from 'next/image'
+import { getImage } from '@/services/imageService'
 
-export default function page() {
-  return (
-    <div>page</div>
-  )
+export default async function page({params}:{params:{imgeId:string}}) {
+  try {
+    const imgage =await getImage({id:params.imgeId})
+    return <Image src={imgage.url} width={450} height={450} alt={imgage.prompt}/>
+  } catch (error) {
+    return <div>error</div>
+  }
 }
