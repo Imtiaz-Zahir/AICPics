@@ -8,28 +8,28 @@ datasource db {
 }
 
 model user {
-  id        String   @id @default(uuid())
+  id        String     @id @default(uuid())
   name      String
-  email     String   @unique
+  email     String     @unique
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  likes     like[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  favorite  favorite[]
 }
 
 model image {
-  id        String   @id @unique
-  url       String   @unique
-  prompt    String   @db.LongText
+  id        String     @id @unique
+  url       String     @unique
+  prompt    String     @db.LongText
   height    Int
   width     Int
   size      Int
   channelId String
   createdAt DateTime
-  likes     like[]
+  favorite  favorite[]
 }
 
-model serch {
+model search {
   id        String   @id @default(uuid())
   query     String   @unique
   total     Int      @default(1)
@@ -37,7 +37,7 @@ model serch {
   updatedAt DateTime @updatedAt
 }
 
-model like {
+model favorite {
   id        String   @id @default(uuid())
   userId    String
   imageId   String

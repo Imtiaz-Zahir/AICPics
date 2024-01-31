@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       orderBy: { total: "asc" },
       take: 5,
     });
-    const suggestions = prevesQuerys.map(({ query }) => query);
+    const suggestions = prevesQuerys.map(({ query }:{query:string}) => query);
 
     return Response.json(suggestions);
   } catch (error) {
