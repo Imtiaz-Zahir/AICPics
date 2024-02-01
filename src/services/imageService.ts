@@ -6,8 +6,8 @@ function createImage(data: Prisma.imageCreateInput) {
   return prisma.image.create({ data });
 }
 
-function getImages(where?: Prisma.imageWhereInput) {
-  return prisma.image.findMany({ where });
+function getImages(data?: Prisma.imageFindManyArgs) {
+  return prisma.image.findMany(data);
 }
 
 function getImage(where: Prisma.imageWhereUniqueInput) {

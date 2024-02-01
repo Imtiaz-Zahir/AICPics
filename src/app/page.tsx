@@ -1,27 +1,19 @@
 "use server";
 import React from "react";
-import ImageCart from "@/components/ImageCart";
 import { getImages } from "@/services/imageService";
+import Gallery from "@/components/Gallery";
 
 export default async function page() {
   try {
-    const photos = await getImages();
-
+    const photos: { id: string; url: string; prompt: string }[] =
+      await getImages({
+        take: 30,
+        select: { id: true, url: true, prompt: true },
+      });
     return (
-      <section className="p-20">
+      <section className="mx-auto w-full">
         <h1 className="text-4xl font-semibold my-8">Most Downloaded Photos</h1>
-        <div className="grid grid-cols-4 gap-5">
-        {photos.map(
-          (image: { id: string; url: string; prompt: string }, index: any) => (
-            <ImageCart
-              key={index}
-              imageId={image.id}
-              url={image.url}
-              prompt={image.prompt}
-            />
-          )
-        )}
-        </div>
+        <Gallery images={photos} />
       </section>
     );
   } catch (error) {

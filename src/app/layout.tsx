@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import {Contex} from "./Contex";
+import { Contex } from "./Contex";
 import Nav from "@/components/Nav";
+import Aside from "@/components/Aside";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700", "900"],
@@ -25,7 +26,11 @@ export default function RootLayout({
       <body className={roboto.className}>
         <Contex>
           <Nav />
-          {children}
+          <main className="flex gap-[5%] pt-16 w-full">
+            <Aside />
+            {children}
+            <Aside />
+          </main>
         </Contex>
       </body>
     </html>

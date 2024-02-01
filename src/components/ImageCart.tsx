@@ -23,7 +23,7 @@ export default function ImageCart({
           alt={prompt}
         />
       </Link>
-      <div className="absolute -top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">
+      <div className="absolute top-0 sm:-top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">
         <Favorite imageId={imageId} />
 
         <Link href={`/api/image?download=${url}`} download={true}>

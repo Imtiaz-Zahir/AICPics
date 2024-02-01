@@ -8,7 +8,11 @@ import {
   createSearch,
 } from "@/services/searchService";
 
-export default async function page({ searchParams }: { searchParams: any }) {
+export default async function page({
+  searchParams,
+}: {
+  searchParams: { search: string };
+}) {
   try {
     storeSearch(searchParams.search);
 
