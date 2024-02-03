@@ -21,6 +21,7 @@ export default async function page({
       where: {
         prompt: { contains: search },
       },
+      take: 100,
     });
 
     if (photos.length === 0) {
@@ -36,13 +37,12 @@ export default async function page({
 async function storeSearch(query: string) {
   try {
     const search = await getSearch({ query });
-  if (!search) {
-    await createSearch({ query });
-  } else {
-    await updateSearch({ id: search.id }, { total: search.total + 1 });
-  }
+    if (!search) {
+      await createSearch({ query });
+    } else {
+      await updateSearch({ id: search.id }, { total: search.total + 1 });
+    }
   } catch (error) {
     console.error(error);
   }
-  
 }
