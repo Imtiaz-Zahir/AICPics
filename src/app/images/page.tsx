@@ -13,11 +13,14 @@ export default async function page({
 }: {
   searchParams: { search: string };
 }) {
+  const search = searchParams.search;
   try {
-    storeSearch(searchParams.search);
+    storeSearch(search);
 
     const photos = await getImages({
-      prompt: { contains: searchParams.search },
+      where: {
+        prompt: { contains: search },
+      },
     });
 
     if (photos.length === 0) {
@@ -31,10 +34,15 @@ export default async function page({
 }
 
 async function storeSearch(query: string) {
-  const search = await getSearch({ query });
+  try {
+    const search = await getSearch({ query });
   if (!search) {
     await createSearch({ query });
   } else {
     await updateSearch({ id: search.id }, { total: search.total + 1 });
   }
+  } catch (error) {
+    console.error(error);
+  }
+  
 }

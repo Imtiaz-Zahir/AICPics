@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { suggestionsAction } from "@/actions/suggestionAction";
+import { suggestionsAction } from "@/actions";
 import Link from "next/link";
 
 export default function Search() {

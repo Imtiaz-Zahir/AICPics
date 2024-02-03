@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const imageURL = request.nextUrl.searchParams.get("download");
-  if (!imageURL) {
+  if (!imageURL ) {
     return new Response("No image URL provided", { status: 400 });
   }
   try {
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const image = await imageResponse.blob();
     const headers = new Headers();
     headers.set("Content-Disposition", "attachment");
-    headers.set("Content-Type", "image/jpeg");
+    headers.set("Content-Type", "image/png");
     return new Response(image, { headers });
   } catch (error) {
     console.error(error);
