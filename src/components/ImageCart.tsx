@@ -13,7 +13,7 @@ export default function ImageCart({
   prompt: string;
 }) {
   return (
-    <div className="rounded-lg border border-secondary overflow-hidden w-full relative group">
+    <div className="rounded-lg border overflow-hidden w-full relative group">
       <Link href={`/images/${imageId}`}>
         <Image
           className="group-hover:scale-105 transition-all duration-300"

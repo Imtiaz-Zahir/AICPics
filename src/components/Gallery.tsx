@@ -1,5 +1,5 @@
-"use client";
-import React, { useEffect, useState } from "react";
+// "use client";
+// import React, { useEffect, useState } from "react";
 import ImageCart from "./ImageCart";
 
 export default function Gallery({
@@ -7,36 +7,38 @@ export default function Gallery({
 }: {
   images: { id: string; prompt: string; url: string }[];
 }) {
-  const [imagesArray, setImagesArray] = useState<
-    { id: string; prompt: string; url: string }[][]
-  >();
+  // const [imagesArray, setImagesArray] = useState<
+  //   { id: string; prompt: string; url: string }[][]
+  // >();
 
-  useEffect(() => {
-    const width = window.innerWidth;
+  // useEffect(() => {
+  //   const width = window.innerWidth;
 
-    if (width > 767 && width < 1023) {
-      setImagesArray(strackerImage(images, 2));
-    } else if (width > 1023) {
-      setImagesArray(strackerImage(images, 3));
-    } else {
-      setImagesArray(strackerImage(images, 1));
-    }
-  }, [images]);
+  //   if (width > 767 && width < 1023) {
+  //     setImagesArray(strackerImage(images, 2));
+  //   } else if (width > 1023) {
+  //     setImagesArray(strackerImage(images, 3));
+  //   } else {
+  //     setImagesArray(strackerImage(images, 1));
+  //   }
+  // }, [images]);
+
+  const imagesArray = strackerImage(images, 5);
 
   return (
-    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 w-full">
-      {imagesArray?imagesArray.map((photos, index) => (
-        <div key={index} className="flex flex-col gap-5">
-          {photos.map((image, index) => (
+    <div className="grid grid-cols-5 gap-1 w-full my-5">
+      {imagesArray.map((photos, index) => (
+        <div key={index} className="flex flex-col gap-1">
+          {photos.map((image) => (
             <ImageCart
-              key={index}
+              key={image.id}
               imageId={image.id}
               url={image.url}
               prompt={image.prompt}
             />
           ))}
         </div>
-      )):loading()}
+      ))}
     </div>
   );
 }

@@ -1,0 +1,88 @@
+"use server"
+import React from "react";
+import Gallery from "@/components/Gallery";
+import { getImages } from "@/services/imageService";
+import Link from "next/link";
+// import {
+//   updateSearch,
+//   getSearch,
+//   createSearch,
+// } from "@/services/searchService";
+
+export default async function page({
+  searchParams,
+}: {
+  searchParams: { search?: string; page?: number };
+}) {
+  const images=await getImages();
+  return (
+    <section className="mx-5 mt-20">
+      <h2 className="text-7xl font-bold text-center mb-3">
+        Explore Gallery <br />
+        Find Your Imagination
+      </h2>
+      <div className="flex items-center justify-between">
+        {searchParams.search ? (
+          <h1 className="text-2xl">
+            Showing photos for{" "}
+            <span className="font-bold">{searchParams.search}</span>{" "}
+            {searchParams.page ? `- Page ${searchParams.page}` : ""}
+          </h1>
+        ) : (
+          <h1 className="text-2xl">
+            Popular Photos{" "}
+            {searchParams.page ? `- Page ${searchParams.page}` : ""}
+          </h1>
+        )}
+
+        {/* <select name="orientation" className="text-2xl focus:outline-none">
+          <option hidden>Orientation</option>
+          <option value="horizontal">Horizontal</option>
+          <option value="vertical">Vertical</option>
+          <option value="square">Square</option>
+          <option value="panoramic">Panoramic</option>
+        </select> */}
+      </div>
+      <Gallery
+        images={images}
+      />
+      <div className="flex items-center justify-between text-xl">
+        <p>
+          Page <span className="font-semibold">{searchParams.page ?? 1}</span>{" "}
+          of <span className="font-semibold">{100}</span>
+        </p>
+        <div className="flex items-center gap-5">
+          <Link href="" className="p-4 border border-red-600 rounded">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="11"
+              height="20"
+              id="arrow"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.634.292a1.063 1.063 0 0 0-1.464 0L.607 8.556a1.95 1.95 0 0 0 0 2.827l8.625 8.325c.4.385 1.048.39 1.454.01a.975.975 0 0 0 .01-1.425l-7.893-7.617a.975.975 0 0 1 0-1.414l7.83-7.557a.974.974 0 0 0 0-1.413"
+              ></path>
+            </svg>
+          </Link>
+          <span className="px-4 py-3 border border-red-600 rounded">
+            {searchParams.page ?? 1}
+          </span>
+          <Link href="" className="p-4 border border-red-600 rounded">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="11"
+              height="20"
+              id="arrow"
+            >
+              <path
+                fillRule="evenodd"
+                d="M.366 19.708c.405.39 1.06.39 1.464 0l8.563-8.264a1.95 1.95 0 0 0 0-2.827L1.768.292A1.063 1.063 0 0 0 .314.282a.976.976 0 0 0-.011 1.425l7.894 7.617a.975.975 0 0 1 0 1.414L.366 18.295a.974.974 0 0 0 0 1.413"
+              ></path>
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}

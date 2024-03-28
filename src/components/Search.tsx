@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { suggestionsAction } from "@/actions";
+// import { suggestionsAction } from "@/actions";
 import Link from "next/link";
 
-export default function Search() {
+export default function Search({ hero }: { hero?: boolean }) {
   const [search, setSearch] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
   const [isFocused, setIsFocused] = useState(false);
@@ -13,20 +13,20 @@ export default function Search() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (search.length > 0) {
-      router.push(`/images?search=${search}`);
+      router.push(`/photos?search=${search.replace(" ", "+")}`);
     }
   }
 
   useEffect(() => {
     if (search.length > 0) {
-      suggestionsAction(search).then((res) => setSearchSuggestions(res));
+      // suggestionsAction(search).then((res) => setSearchSuggestions(res));
     } else {
       setSearchSuggestions([]);
     }
   }, [search]);
 
   return (
-    <form className="flex items-center relative w-2/5" onSubmit={handleSubmit}>
+    <form className={`flex items-center relative ${hero?"w-[700px]":"w-2/5"}`} onSubmit={handleSubmit}>
       <input
         type="text"
         name="search"
@@ -35,10 +35,12 @@ export default function Search() {
         onBlur={() => setIsFocused(false)}
         value={search}
         onChange={(event) => setSearch(event.target.value)}
-        className="h-10 rounded-full px-5 py-2 w-full focus:outline-none border border-secondary bg-transparent text-lg"
+        className={`py-2 w-full focus:outline-none border border-black ${
+          hero ? "rounded-lg px-2 h-12" : "rounded-full px-3 h-10"
+        }`}
       />
-      <button type="submit" className="absolute right-3">
-        <svg className="w-6 h-6" viewBox="0 0 29 29" fill="#F5F5F5">
+      <button type="submit" className="absolute right-3" name="search">
+        <svg className="w-6 h-6" viewBox="0 0 29 29" fill="#000">
           <path d="M11.854 21.854c-5.514 0-10-4.486-10-10s4.486-10 10-10 10 4.486 10 10-4.486 10-10 10zm0-18c-4.411 0-8 3.589-8 8s3.589 8 8 8 8-3.589 8-8-3.588-8-8-8z"></path>
           <path d="M26.146 27.146a.997.997 0 0 1-.707-.293l-7.694-7.694a.999.999 0 1 1 1.414-1.414l7.694 7.694a.999.999 0 0 1-.707 1.707z"></path>
         </svg>
@@ -50,9 +52,7 @@ export default function Search() {
               key={index}
               className="hover:bg-[#363636] px-5 py-1 font-medium"
             >
-              <Link href={`/images?search=${suggestion}`}>
-                {suggestion}
-              </Link>
+              <Link href={`/images?search=${suggestion}`}>{suggestion}</Link>
             </li>
           ))}
         </ul>

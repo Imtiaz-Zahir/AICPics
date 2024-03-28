@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Contex } from "./Contex";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import Aside from "@/components/Aside";
 
 const roboto = Roboto({
@@ -11,7 +12,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "AI Photos",
+  title: "Synthetic Gallery",
   description:
     "Over 20 million free AI-generated photos available for download.",
 };
@@ -22,16 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="bg-primary text-secondary">
-      <body className={roboto.className}>
+    <html lang="en">
+      <body className={roboto.className + " flex flex-col gap-y-20"}>
         <Contex>
           <Nav />
-          <main className="flex gap-[5%] pt-16 w-full">
-            <Aside />
-            {children}
-            <Aside />
-          </main>
+          {children}
         </Contex>
+        <Footer />
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { likeContex } from "@/app/Contex";
 import Search from "./Search";
 import Link from "next/link";
@@ -8,13 +8,28 @@ import Image from "next/image";
 export default function Nav() {
   const contex = useContext(likeContex);
 
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      document
+        .getElementsByTagName("nav")[0]
+        .classList.toggle("scroll", window.scrollY > 0);
+    });
+  }, []);
+
   return (
-    <nav className="flex items-center justify-between py-3 px-20 fixed w-full bg-primary z-50">
-      <Link href="/" className="font-medium text-3xl">
-        AI Photos
+    <nav className="flex items-center justify-between py-3 bg-white fixed w-full px-5 z-50">
+      <Link href="/">
+        <Image
+          src="/logo.png"
+          alt="Synthetic Gallery"
+          height={50}
+          width={150}
+        />
       </Link>
       <Search />
       <div className="flex justify-center items-center gap-5">
+        <Link href={"/photos"}>Photos</Link>
+        <Link href={"/blogs"}>Blogs</Link>
         <Link href={"/favorites"} className="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
