@@ -17,6 +17,7 @@ export default function ImageCart({
       <Link href={`/images/${imageId}`}>
         <Image
           className="group-hover:scale-105 transition-all duration-300"
+          unoptimized={true}
           src={url}
           height={450}
           width={450}
