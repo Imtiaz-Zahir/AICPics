@@ -7,7 +7,7 @@ export default async function page({ params }: { params: { imgeId: string } }) {
   return (
     <section className="w-[95vw] mx-auto mt-20 flex flex-col lg:flex-row gap-10">
       <div
-        className="lg:w-3/4 flex flex-col items-center justify-center lg:pr-10"
+        className="lg:w-3/4 flex flex-col items-center justify-center"
         style={{ maxHeight: "calc(100vh - 100px)" }}
       >
           {/* <Image

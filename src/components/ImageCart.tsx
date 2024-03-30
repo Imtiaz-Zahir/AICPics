@@ -14,7 +14,7 @@ export default function ImageCart({
 }) {
   return (
     <div className="rounded-lg border overflow-hidden w-full relative group">
-      <Link href={`/photos/${imageId}`}>
+      {/* <Link href={`/photos/${imageId}`}> */}
         <Image
           className="group-hover:scale-105 transition-all duration-300"
           // unoptimized={true}
@@ -24,7 +24,7 @@ export default function ImageCart({
           width={450}
           alt={prompt}
         />
-      </Link>
+      {/* </Link> */}
       <div className="absolute top-0 sm:-top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">
         <Favorite imageId={imageId} />
 

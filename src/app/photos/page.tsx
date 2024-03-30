@@ -1,13 +1,15 @@
-"use server"
 import React from "react";
 import Gallery from "@/components/Gallery";
 import { getImages } from "@/services/imageService";
 import Link from "next/link";
+import ImageDetails from "@/components/ImageDetails";
 // import {
 //   updateSearch,
 //   getSearch,
 //   createSearch,
 // } from "@/services/searchService";
+
+export const revalidate = 3600
 
 export default async function page({
   searchParams,
@@ -16,6 +18,7 @@ export default async function page({
 }) {
   const images=await getImages();
   return (
+    <>
     <section className="w-[95vw] mx-auto mt-20">
       <h2 className="text-3xl sm:text-7xl font-bold text-center mb-3">
         Explore Gallery <br />
@@ -52,7 +55,7 @@ export default async function page({
           of <span className="font-semibold">{100}</span>
         </p>
         <div className="flex items-center gap-5">
-          <Link href="" className="p-4 border border-red-600 rounded">
+          <Link href="" aria-label="Previous" className="p-4 border border-red-600 rounded">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="11"
@@ -68,7 +71,7 @@ export default async function page({
           <span className="px-4 py-3 border border-red-600 rounded">
             {searchParams.page ?? 1}
           </span>
-          <Link href="" className="p-4 border border-red-600 rounded">
+          <Link href="" aria-label="Next" className="p-4 border border-red-600 rounded">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="11"
@@ -84,5 +87,7 @@ export default async function page({
         </div>
       </div>
     </section>
+    <ImageDetails />
+    </>
   );
 }

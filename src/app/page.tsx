@@ -1,9 +1,9 @@
-"use server";
 import React from "react";
 import { getImages } from "@/services/imageService";
 import Search from "@/components/Search";
 import Image from "next/image";
 import creations from "./creations.json";
+
 
 export default async function page() {
   return (
@@ -14,7 +14,18 @@ export default async function page() {
           <br /> AI Generated Photos
         </h1>
         <Search hero={true} />
-        <Image src="/creations/abstract-wave-pattern-vibrant-colors-modern-decoration-generated-by-artificial-intelligence.jpg" style={{position:"absolute",zIndex:"-1",objectFit:"cover",filter:"brightness(.5)"}} fill={true} priority={true} alt="hero image"/>
+        <Image
+          src="/creations/abstract-wave-pattern-vibrant-colors-modern-decoration-generated-by-artificial-intelligence.jpg"
+          style={{
+            position: "absolute",
+            zIndex: "-1",
+            objectFit: "cover",
+            filter: "brightness(.5)",
+          }}
+          fill={true}
+          priority={true}
+          alt="hero image"
+        />
       </section>
       <section className="mx-5 text-center">
         <h1 className="text-5xl font-bold">
