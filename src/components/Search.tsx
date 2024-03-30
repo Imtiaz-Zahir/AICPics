@@ -26,7 +26,7 @@ export default function Search({ hero }: { hero?: boolean }) {
   }, [search]);
 
   return (
-    <form className={`flex items-center relative ${hero?"w-[700px]":"w-2/5"}`} onSubmit={handleSubmit}>
+    <form className="flex items-center relative w-3/4 lg:w-2/4" onSubmit={handleSubmit}>
       <input
         type="text"
         name="search"

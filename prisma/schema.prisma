@@ -8,22 +8,55 @@ datasource db {
 }
 
 model images {
-  id        String   @id @unique
-  url       String   @db.LongText
-  prompt    String   @db.LongText
+  id        String     @id @unique
+  url       String     @db.LongText
+  prompt    String     @db.LongText
+  likes     Int        @default(0)
   height    Int
   width     Int
   size      Int
   channelId String
   createdAt DateTime
-  storedAt  DateTime @default(now())
-  updatedAt DateTime
+  storedAt  DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  favorite  favorite[]
 }
 
-model similar {
+model similarities {
   id        Int      @id @default(autoincrement())
   prompt    String   @db.LongText
   imageId   Json
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
+}
+
+model user {
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  password  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  favorite  favorite[]
+}
+
+model search {
+  query     String   @unique
+  total     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([query])
+}
+
+model favorite {
+  userId    String
+  imageId   String
+  user      user     @relation(fields: [userId], references: [id])
+  images    images   @relation(fields: [imageId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, imageId])
+  @@index([userId])
 }

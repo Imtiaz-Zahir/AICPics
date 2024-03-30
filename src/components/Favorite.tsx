@@ -1,10 +1,10 @@
 "use client";
 import { useContext, useState } from "react";
-import { likeContex } from "@/app/Contex";
+// import { context } from "@/app/Context";
 
 export default function Favorite({ imageId }: { imageId: string }) {
   const [isFavorite, setIsFavorite] = useState(false);
-  const contex = useContext(likeContex);
+  // const appContext = useContext(context);
 
   return (
     <svg

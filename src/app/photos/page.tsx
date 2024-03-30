@@ -16,20 +16,20 @@ export default async function page({
 }) {
   const images=await getImages();
   return (
-    <section className="mx-5 mt-20">
-      <h2 className="text-7xl font-bold text-center mb-3">
+    <section className="w-[95vw] mx-auto mt-20">
+      <h2 className="text-3xl sm:text-7xl font-bold text-center mb-3">
         Explore Gallery <br />
         Find Your Imagination
       </h2>
       <div className="flex items-center justify-between">
         {searchParams.search ? (
-          <h1 className="text-2xl">
-            Showing photos for{" "}
+          <h1 className="text-xl sm:text-2xl">
+            Total 500 photos found for{" "}
             <span className="font-bold">{searchParams.search}</span>{" "}
             {searchParams.page ? `- Page ${searchParams.page}` : ""}
           </h1>
         ) : (
-          <h1 className="text-2xl">
+          <h1 className="text-xl sm:text-2xl">
             Popular Photos{" "}
             {searchParams.page ? `- Page ${searchParams.page}` : ""}
           </h1>

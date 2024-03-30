@@ -14,11 +14,12 @@ export default function ImageCart({
 }) {
   return (
     <div className="rounded-lg border overflow-hidden w-full relative group">
-      <Link href={`/images/${imageId}`}>
+      <Link href={`/photos/${imageId}`}>
         <Image
           className="group-hover:scale-105 transition-all duration-300"
-          unoptimized={true}
+          // unoptimized={true}
           src={url}
+          // fill
           height={450}
           width={450}
           alt={prompt}

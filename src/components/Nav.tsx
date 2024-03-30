@@ -1,14 +1,32 @@
 "use client";
-import { useContext, useEffect } from "react";
-import { likeContex } from "@/app/Contex";
+import { useContext, useEffect, useState } from "react";
+import { context } from "@/app/Context";
 import Search from "./Search";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Nav() {
-  const contex = useContext(likeContex);
+  const appContext = useContext(context);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    // stop scrolling when menu is open
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    // add effect if window is scrolled on load
+    if (window.scrollY > 0) {
+      document.getElementsByTagName("nav")[0].classList.add("scroll");
+    }
+
+    // appContext?.setDeviceWidth(window.innerWidth);
+
+    // toggle effect on scroll
     window.addEventListener("scroll", () => {
       document
         .getElementsByTagName("nav")[0]
@@ -17,65 +35,84 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="flex items-center justify-between py-3 bg-white fixed w-full px-5 z-50">
+    <nav className="flex items-center justify-between gap-2 py-3 bg-white fixed w-full px-2 sm:px-5 z-50">
       <Link href="/">
         <Image
+          className="sm:hidden"
+          src="/logo-small.png"
+          alt="Synthetic Gallery"
+          height={50}
+          width={50}
+          priority={true}
+        />
+        <Image
+          className="hidden sm:block"
           src="/logo.png"
           alt="Synthetic Gallery"
           height={50}
           width={150}
+          priority={true}
         />
       </Link>
       <Search />
-      <div className="flex justify-center items-center gap-5">
-        <Link href={"/photos"}>Photos</Link>
-        <Link href={"/blogs"}>Blogs</Link>
-        <Link href={"/favorites"} className="relative">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 64 64"
-            className="w-9 h-9"
-            fill="#FF0000"
-          >
-            <path
-              d="M32,57,56.36,32.1h0A14.5,14.5,0,0,0,46.42,7c-7.47,0-13.61,5.13-14.35,7.31a.08.08,0,0,1-.15,0C31.19,12.11,25.05,7,17.58,7A14.5,14.5,0,0,0,7.64,32.1h0L32,57"
-              data-name="Layer 3"
-            ></path>
-          </svg>
-          <span className="absolute bottom-0 text-sm right-0">
-            {contex?.likedImages.length ?? 0}
-          </span>
-        </Link>
-
-        {false ? (
-          <Image src={"/"} height={36} width={36} alt="sf" />
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            x="0px"
-            y="0px"
-            width="36"
-            height="36"
-            viewBox="0 0 48 48"
-          >
-            <path
-              fill="#FFC107"
-              d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
-            ></path>
-            <path
-              fill="#FF3D00"
-              d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
-            ></path>
-            <path
-              fill="#4CAF50"
-              d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
-            ></path>
-            <path
-              fill="#1976D2"
-              d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
-            ></path>
-          </svg>
-        )}
+      <svg
+        onClick={() => setMenuOpen((prev) => !prev)}
+        className="w-12 z-20 md:hidden"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="#000"
+          d={
+            menuOpen
+              ? "M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"
+              : "M3,8H21a1,1,0,0,0,0-2H3A1,1,0,0,0,3,8Zm18,8H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Zm0-5H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"
+          }
+        ></path>
+      </svg>
+      <div
+        className={`absolute sm:static bg-red-500 sm:bg-transparent w-full sm:w-auto h-screen sm:h-auto -z-10 ${
+          menuOpen ? "left-0" : "left-full"
+        } top-16 p-8 sm:p-0 flex flex-col sm:flex-row items-center gap-7 transition-all duration-300`}
+      >
+        <ul className="flex flex-col sm:flex-row justify-center items-center gap-5 text-xl font-semibold">
+          <li>
+            <Link href={"/photos"}>Photos</Link>
+          </li>
+          <li>
+            <Link href={"/blogs"}>Blogs</Link>
+          </li>
+          <li>
+            <Link href={"/about"}>About</Link>
+          </li>
+          <li>
+            <Link href={"/favorites"} className="relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 64 64"
+                className="w-9 h-9"
+                fill="#FF0000"
+              >
+                <path
+                  d="M32,57,56.36,32.1h0A14.5,14.5,0,0,0,46.42,7c-7.47,0-13.61,5.13-14.35,7.31a.08.08,0,0,1-.15,0C31.19,12.11,25.05,7,17.58,7A14.5,14.5,0,0,0,7.64,32.1h0L32,57"
+                  data-name="Layer 3"
+                ></path>
+              </svg>
+              <span className="absolute bottom-0 text-sm right-0">
+                {appContext?.likedImages.length ?? 0}
+              </span>
+            </Link>
+          </li>
+        </ul>
+        <div>
+          {false ? (
+            <Image src={"/"} height={36} width={36} priority={true} alt="sf" />
+          ) : (
+            <button className="bg-black text-white py-2 px-5 rounded">
+              Sign in
+            </button>
+          )}
+        </div>
       </div>
     </nav>
   );

@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 // }
 
 export function getImages() {
-  return prisma.images.findMany({take: 50});
+  return prisma.images.findMany({take: 10});
 }
 
 // function getImage(where: Prisma.imageWhereUniqueInput) {

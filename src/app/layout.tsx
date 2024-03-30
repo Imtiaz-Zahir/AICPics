@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { Contex } from "./Contex";
+import { Context } from "./Context";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Aside from "@/components/Aside";
@@ -25,10 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className + " flex flex-col gap-y-20"}>
-        <Contex>
+        <Context>
           <Nav />
           {children}
-        </Contex>
+        </Context>
         <Footer />
       </body>
     </html>
