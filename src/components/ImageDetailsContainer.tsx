@@ -1,39 +1,39 @@
-import {useContext} from "react";
-import Image from "next/image";
-import Link from "next/link";
-import Favorite from "./Favorite";
-import { context } from "@/app/Context";
+import React from "react";
 
-
-export default function ImageCart({
-  imageId,
-  url,
-  prompt,
-}: {
-  imageId: string;
+type Image = {
   url: string;
   prompt: string;
-}) {
-  const appContext = useContext(context);
-  
-  return (
-    <div className="rounded-lg border overflow-hidden w-full relative group">
-      {/* <Link href={`/photos/${imageId}`}> */}
-        <Image
-          className="group-hover:scale-105 transition-all duration-300 cursor-pointer"
-          onClick={()=>{appContext?.setImageID(imageId)}}
-          // unoptimized={true}
-          src={url}
-          // fill
-          height={450}
-          width={450}
-          alt={prompt}
-        />
-      {/* </Link> */}
-      <div className="absolute top-0 sm:-top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">
-        <Favorite imageId={imageId} />
+  height: number;
+  width: number;
+  size: number;
+};
 
-        <Link href={`/api/image?download=${url}`} download={true}>
+export default function ImageDetailsContainer({
+  imageData,
+}: {
+  imageData: Image;
+}) {
+  return (
+    <>
+      <div
+        className="lg:w-3/4 flex flex-col items-center justify-center"
+        style={{ maxHeight: "calc(100vh - 100px)" }}
+      >
+        {/* <Image
+            src="/creations/anime-tree-illustration.jpg"
+            // style={{ maxHeight: "100%", maxWidth: "100%" }}
+            height={1000}
+            width={100}
+            // fill={true}
+            alt="image"
+          /> */}
+        <img src={imageData.url} className="max-w-full max-h-full" alt="" />
+
+        <p>{imageData.prompt}</p>
+      </div>
+      <div className="lg:w-1/4">
+        <div className="flex items-center justify-center mb-7 w-full aspect-square"></div>
+        <button className="bg-green-800 py-3 w-full rounded flex items-center justify-center gap-1 text-white text-xl">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -66,8 +66,9 @@ export default function ImageCart({
               </g>
             </g>
           </svg>
-        </Link>
+          DOWNLOAD
+        </button>
       </div>
-    </div>
+    </>
   );
 }

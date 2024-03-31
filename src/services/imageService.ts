@@ -1,15 +1,22 @@
-
 import { PrismaClient, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export function getImages(skip: number, search?: string, take: number = 100) {
+  return prisma.images.findMany({
+    take,
+    skip,
+    where: search ? { prompt: { contains: search } } : undefined,
+  });
+}
+
+export function getImageByID(id: string) {
+  return prisma.images.findUnique({ where: { id } });
+}
+
 // function createImage(data: Prisma.imageCreateInput) {
 //   return prisma.image.create({ data });
 // }
-
-export function getImages() {
-  return prisma.images.findMany({take: 10});
-}
 
 // function getImage(where: Prisma.imageWhereUniqueInput) {
 //   return prisma.image.findUnique({ where });
