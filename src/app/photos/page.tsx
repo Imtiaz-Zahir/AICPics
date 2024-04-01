@@ -20,7 +20,8 @@ export default async function page({
 
   const currentPage = Number(searchParams.page ?? 1);
   const search = searchParams.search?.replace("+", " ");
-  const skip = (currentPage - 1) * 100;
+  const skip = (currentPage - 1) * 30;
+  
 
   const images = await getImages(skip, search);
 

@@ -2,7 +2,7 @@ import { PrismaClient, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export function getImages(skip: number, search?: string, take: number = 100) {
+export function getImages(skip: number, search?: string, take: number = 30) {
   return prisma.images.findMany({
     take,
     skip,

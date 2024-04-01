@@ -1,9 +1,7 @@
-// "use client";
-// import { useContext } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Favorite from "./Favorite";
-// import { context } from "@/app/Context";
 
 export default function ImageCart({
   imageId,
@@ -14,24 +12,12 @@ export default function ImageCart({
   url: string;
   prompt: string;
 }) {
-  // const appContext = useContext(context);
-
   return (
     <div className="rounded-lg border overflow-hidden w-full relative group">
-      <Link
-        href={`/photos/${imageId}`}
-        data-image_id={imageId}
-        // onClick={(event) => {
-        //   event.preventDefault();
-        //   appContext?.setImageID(imageId);
-        // }}
-      >
+      <Link href={`/photos/${imageId}`} data-image_id={imageId}>
         <Image
           className="group-hover:scale-105 transition-all duration-300 cursor-pointer"
-          // onClick={()=>{appContext?.setImageID(imageId)}}
-          // unoptimized={true}
           src={url}
-          // fill
           height={450}
           width={450}
           alt={prompt}

@@ -26,7 +26,10 @@ export default function Search({ hero }: { hero?: boolean }) {
   }, [search]);
 
   return (
-    <form className="flex items-center relative w-3/4 lg:w-2/4" onSubmit={handleSubmit}>
+    <form
+      className="flex items-center relative w-3/4 lg:w-2/4"
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         name="search"
@@ -39,13 +42,18 @@ export default function Search({ hero }: { hero?: boolean }) {
           hero ? "rounded-lg px-2 h-12" : "rounded-full px-3 h-10"
         }`}
       />
-      <button type="submit" className="absolute right-3" name="search">
+      <button
+        type="submit"
+        className="absolute right-3"
+        name="search"
+        aria-label="search"
+      >
         <svg className="w-6 h-6" viewBox="0 0 29 29" fill="#000">
           <path d="M11.854 21.854c-5.514 0-10-4.486-10-10s4.486-10 10-10 10 4.486 10 10-4.486 10-10 10zm0-18c-4.411 0-8 3.589-8 8s3.589 8 8 8 8-3.589 8-8-3.588-8-8-8z"></path>
           <path d="M26.146 27.146a.997.997 0 0 1-.707-.293l-7.694-7.694a.999.999 0 1 1 1.414-1.414l7.694 7.694a.999.999 0 0 1-.707 1.707z"></path>
         </svg>
       </button>
-      {isFocused && searchSuggestions.length > 0 && (
+      {!hero && isFocused && searchSuggestions.length > 0 && (
         <ul className="absolute top-12 w-full bg-[#222222] rounded-xl text-lg overflow-hidden">
           {searchSuggestions.map((suggestion, index) => (
             <li

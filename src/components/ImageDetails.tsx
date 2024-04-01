@@ -14,31 +14,22 @@ type Image = {
 
 export default function ImageDetails() {
   const appContext = useContext(context);
-  const [imageData,setImageData]= useState<Image | null>(null);
+  const [imageData, setImageData] = useState<Image | null>(null);
 
   const imageID = appContext?.imageID;
   const setImageID = appContext?.setImageID;
 
-  useEffect(()=>{
-    const elements = Array.from(document.getElementsByTagName('a'));
-
-    elements.forEach((element)=>{
-      const imageID = element.getAttribute('data-image_id');
-      if(!imageID) return;
-      element.addEventListener('click',(event)=>{
+  useEffect(() => {
+    Array.from(document.getElementsByTagName("a")).forEach((element) => {
+      const imageID = element.getAttribute("data-image_id");
+      if (!imageID) return;
+      element.addEventListener("click", (event) => {
         event.preventDefault();
-        if(!setImageID) return;
-        setImageID(imageID)
-      })
-    })
-
-    // elements.forEach((element)=>{
-    //   element.addEventListener('click',(event)=>{
-    //     event.preventDefault()
-    //     setImageID(element.getAttribute('data-image_id'))
-    //   })
-    // })
-  },[])
+        if (!setImageID) return;
+        setImageID(imageID);
+      });
+    });
+  }, [setImageID]);
 
   useEffect(() => {
     if (appContext?.imageID) {
@@ -46,12 +37,11 @@ export default function ImageDetails() {
     } else {
       document.body.style.overflow = "auto";
     }
-    if(appContext?.imageID){
+    if (appContext?.imageID) {
       imageAction(appContext.imageID).then((data) => {
         setImageData(data);
       });
     }
-
   }, [appContext?.imageID]);
 
   if (!imageID || !setImageID || !imageData) return null;
