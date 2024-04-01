@@ -2,7 +2,7 @@ import React from "react";
 import Gallery from "@/components/Gallery";
 import { getImages } from "@/services/imageService";
 import Link from "next/link";
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers";
 import ImageDetails from "@/components/ImageDetails";
 // import {
 //   updateSearch,
@@ -14,15 +14,15 @@ export default async function page({
   searchParams,
 }: {
   searchParams: { search?: string; page?: string };
-}) {  
-  const cookieStore = cookies()
-  const width = Number(cookieStore.get('width')) || 1280
+}) {
+  const cookieStore = cookies();
+  const width = Number(cookieStore.get("width")?.value ?? 1279);
 
   const currentPage = Number(searchParams.page ?? 1);
-  const search = searchParams.search?.replace("+"," ");
-  const skip = (currentPage-1) * 100;
-  
-  const images = await getImages(skip,search);
+  const search = searchParams.search?.replace("+", " ");
+  const skip = (currentPage - 1) * 100;
+
+  const images = await getImages(skip, search);
 
   return (
     <>
@@ -52,16 +52,20 @@ export default async function page({
           <option value="panoramic">Panoramic</option>
         </select> */}
         </div>
-        <Gallery images={images} width={width}/>
+        <Gallery images={images} width={width} />
         <div className="flex items-center justify-between text-xl">
           <p>
-            Page <span className="font-semibold">{currentPage}</span>{" "}
-            of <span className="font-semibold">{100}</span>
+            Page <span className="font-semibold">{currentPage}</span> of{" "}
+            <span className="font-semibold">{100}</span>
           </p>
           <div className="flex items-center gap-5">
             {currentPage > 1 ? (
               <Link
-                href={`/photos?${searchParams.search?"search="+searchParams.search+"&":""}page=${currentPage - 1}`}
+                href={`/photos?${
+                  searchParams.search
+                    ? "search=" + searchParams.search + "&"
+                    : ""
+                }page=${currentPage - 1}`}
                 aria-label="Previous"
                 className="p-4 border border-red-600 rounded"
               >
@@ -82,7 +86,9 @@ export default async function page({
               {currentPage}
             </span>
             <Link
-              href={`/photos?${searchParams.search?"search="+searchParams.search+"&":""}page=${currentPage + 1}`}
+              href={`/photos?${
+                searchParams.search ? "search=" + searchParams.search + "&" : ""
+              }page=${currentPage + 1}`}
               aria-label="Next"
               className="p-4 border border-red-600 rounded"
             >

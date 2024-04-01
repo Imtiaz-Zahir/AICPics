@@ -19,6 +19,27 @@ export default function ImageDetails() {
   const imageID = appContext?.imageID;
   const setImageID = appContext?.setImageID;
 
+  useEffect(()=>{
+    const elements = Array.from(document.getElementsByTagName('a'));
+
+    elements.forEach((element)=>{
+      const imageID = element.getAttribute('data-image_id');
+      if(!imageID) return;
+      element.addEventListener('click',(event)=>{
+        event.preventDefault();
+        if(!setImageID) return;
+        setImageID(imageID)
+      })
+    })
+
+    // elements.forEach((element)=>{
+    //   element.addEventListener('click',(event)=>{
+    //     event.preventDefault()
+    //     setImageID(element.getAttribute('data-image_id'))
+    //   })
+    // })
+  },[])
+
   useEffect(() => {
     if (appContext?.imageID) {
       document.body.style.overflow = "hidden";

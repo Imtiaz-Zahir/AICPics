@@ -21,7 +21,7 @@ export default function Gallery({
       return strackerImage(images, 4);
     } else if (width > 767) {
       return strackerImage(images, 3);
-    } else if (width > 639) {
+    } else if (width > 450) {
       return strackerImage(images, 2);
     } else {
       return strackerImage(images, 1);
@@ -30,7 +30,7 @@ export default function Gallery({
 
   // if (!imagesArray) {
   //   return (
-  //     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1 w-full my-5">
+      // <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1 w-full my-5">
   //       {loading()}
   //     </div>
   //   );
@@ -38,7 +38,8 @@ export default function Gallery({
 
   return (
     <div
-      className={`grid grid-cols-${imagesArray.length} gap-1 w-full mt-2 mb-5`}
+      className="grid gap-1 w-full mt-2 mb-5"
+      style={{  gridTemplateColumns: `repeat(${imagesArray.length}, minmax(0, 1fr))` }}
     >
       {imagesArray.map((photos, index) => (
         <div key={index} className="flex flex-col gap-1">
