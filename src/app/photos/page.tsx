@@ -2,6 +2,7 @@ import React from "react";
 import Gallery from "@/components/Gallery";
 import { getImages } from "@/services/imageService";
 import Link from "next/link";
+import { cookies } from 'next/headers'
 import ImageDetails from "@/components/ImageDetails";
 // import {
 //   updateSearch,
@@ -13,7 +14,10 @@ export default async function page({
   searchParams,
 }: {
   searchParams: { search?: string; page?: string };
-}) {
+}) {  
+  const cookieStore = cookies()
+  const width = Number(cookieStore.get('width')) || 1280
+
   const currentPage = Number(searchParams.page ?? 1);
   const search = searchParams.search?.replace("+"," ");
   const skip = (currentPage-1) * 100;
@@ -48,7 +52,7 @@ export default async function page({
           <option value="panoramic">Panoramic</option>
         </select> */}
         </div>
-        <Gallery images={images} />
+        <Gallery images={images} width={width}/>
         <div className="flex items-center justify-between text-xl">
           <p>
             Page <span className="font-semibold">{currentPage}</span>{" "}
