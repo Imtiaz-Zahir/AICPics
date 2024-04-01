@@ -8,6 +8,7 @@ import Image from "next/image";
 export default function Nav() {
   const appContext = useContext(context);
   const [menuOpen, setMenuOpen] = useState(false);
+  
 
   useEffect(() => {
     // stop scrolling when menu is open
@@ -24,14 +25,15 @@ export default function Nav() {
       document.getElementsByTagName("nav")[0].classList.add("scroll");
     }
 
-    // appContext?.setDeviceWidth(window.innerWidth);
-
     // toggle effect on scroll
     window.addEventListener("scroll", () => {
       document
         .getElementsByTagName("nav")[0]
         .classList.toggle("scroll", window.scrollY > 0);
     });
+
+    // set width in cookie
+    document.cookie = `width=${window.innerWidth};  path=/`
   }, []);
 
   return (
