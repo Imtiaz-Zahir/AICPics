@@ -1,7 +1,7 @@
 "use server";
 import { getImageByID } from "@/services/imageService";
 
-export default async function imageAction(imageId: string) {
+export default async function imageAction(imageId: bigint) {
   try {
     const image = await getImageByID(imageId);
     return image;

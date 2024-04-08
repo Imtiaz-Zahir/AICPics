@@ -1,14 +1,9 @@
 import React from "react";
-import Image from "next/image";
 import { getImageByID } from "@/services/imageService";
 import ImageDetailsContainer from "@/components/ImageDetailsContainer";
 
-// export const getStaticProps = (async () => {
-//   return { props: { imgeId:"123" } }
-// })
-
-export default async function page({ params }: { params: { imgeId: string } }) {
-  const imageData = await getImageByID(params.imgeId);
+export default async function page({ params }: { params: { imageId: string } }) {
+  const imageData = await getImageByID(BigInt(params.imageId));
 
   if (!imageData) {
     return <div>Image not found</div>;

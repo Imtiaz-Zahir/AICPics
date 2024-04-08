@@ -4,7 +4,8 @@ import "./globals.css";
 import { Context } from "./Context";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import Aside from "@/components/Aside";
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700", "900"],
@@ -30,6 +31,8 @@ export default function RootLayout({
           {children}
         </Context>
         <Footer />
+      <Analytics/>
+      <SpeedInsights/>
       </body>
     </html>
   );

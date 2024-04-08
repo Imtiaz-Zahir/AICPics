@@ -26,7 +26,7 @@ export default function ImageDetails() {
       element.addEventListener("click", (event) => {
         event.preventDefault();
         if (!setImageID) return;
-        setImageID(imageID);
+        setImageID(BigInt(imageID));
       });
     });
   }, [setImageID]);

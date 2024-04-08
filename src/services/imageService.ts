@@ -2,15 +2,16 @@ import { PrismaClient, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export function getImages(skip: number, search?: string, take: number = 30) {
+export function getImages(skip: number, take: number, search?: string) {
   return prisma.images.findMany({
     take,
     skip,
     where: search ? { prompt: { contains: search } } : undefined,
+    orderBy: { createdAt: "desc" },
   });
 }
 
-export function getImageByID(id: string) {
+export function getImageByID(id: bigint) {
   return prisma.images.findUnique({ where: { id } });
 }
 

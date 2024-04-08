@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const imageURL = request.nextUrl.searchParams.get("download");
+  const imageURL = request.nextUrl.searchParams.get("url");
   if (!imageURL ) {
     return new Response("No image URL provided", { status: 400 });
   }
