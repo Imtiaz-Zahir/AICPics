@@ -3,60 +3,23 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model images {
-  id        String     @id @unique
-  url       String     @db.LongText
-  prompt    String     @db.LongText
-  likes     Int        @default(0)
-  height    Int
-  width     Int
-  size      Int
-  channelId String
-  createdAt DateTime
-  storedAt  DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  favorite  favorite[]
-}
-
-model similarities {
-  id        Int      @id @default(autoincrement())
-  prompt    String   @db.LongText
-  imageId   Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model user {
-  id        String     @id @default(uuid())
-  name      String
-  email     String     @unique
-  password  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  favorite  favorite[]
-}
-
-model search {
-  query     String   @unique
-  total     Int      @default(1)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([query])
-}
-
-model favorite {
-  userId    String
-  imageId   String
-  user      user     @relation(fields: [userId], references: [id])
-  images    images   @relation(fields: [imageId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([userId, imageId])
-  @@index([userId])
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  v              Int      @map("__v")
+  build_At       DateTime @db.Date
+  channelID      String
+  createdAt      DateTime @db.Date
+  displayImage   String   @unique(map: "displayImage_1")
+  height         Int
+  id_            String   @unique(map: "id_1") @map("id")
+  prompt         String
+  size           Int
+  thumbnailImage String   @unique(map: "thumbnailImage_1")
+  updatedAt      DateTime @db.Date
+  url            String   @unique(map: "url_1")
+  width          Int
 }

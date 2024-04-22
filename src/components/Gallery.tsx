@@ -6,7 +6,7 @@ export default function Gallery({
   images,
   width,
 }: {
-  images: { id: bigint; prompt: string; url: string }[];
+  images: { id: string; prompt: string; thumbnailImage: string }[];
   width: number;
 }) {
   // const [imagesArray, setImagesArray] = useState<
@@ -47,7 +47,7 @@ export default function Gallery({
             <ImageCart
               key={image.id}
               imageId={image.id}
-              url={image.url}
+              url={image.thumbnailImage}
               prompt={image.prompt}
             />
           ))}
@@ -58,14 +58,14 @@ export default function Gallery({
 }
 
 function strackerImage(
-  images: { id: bigint; prompt: string; url: string }[],
+  images: { id: string; prompt: string; thumbnailImage: string }[],
   columns: number
 ) {
   const array = [];
   for (let index = 0; index < columns; index++) {
     array.push([]);
   }
-  return images.reduce<{ id: bigint; prompt: string; url: string }[][]>(
+  return images.reduce<{ id: string; prompt: string; thumbnailImage: string }[][]>(
     (acc, curr, index) => {
       acc[index % acc.length].push(curr);
       return acc;

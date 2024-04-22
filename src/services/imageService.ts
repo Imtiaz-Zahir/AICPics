@@ -11,7 +11,7 @@ export function getImages(skip: number, take: number, search?: string) {
   });
 }
 
-export function getImageByID(id: bigint) {
+export function getImageByID(id: string) {
   return prisma.images.findUnique({ where: { id } });
 }
 

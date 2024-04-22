@@ -8,7 +8,7 @@ export default function ImageCart({
   url,
   prompt,
 }: {
-  imageId: bigint;
+  imageId: string;
   url: string;
   prompt: string;
 }) {
@@ -21,6 +21,7 @@ export default function ImageCart({
           height={450}
           width={450}
           alt={prompt}
+          unoptimized={true}
         />
       </Link>
       {/* <div className="absolute top-0 sm:-top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">

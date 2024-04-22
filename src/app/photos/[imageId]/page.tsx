@@ -3,7 +3,7 @@ import { getImageByID } from "@/services/imageService";
 import ImageDetailsContainer from "@/components/ImageDetailsContainer";
 
 export default async function page({ params }: { params: { imageId: string } }) {
-  const imageData = await getImageByID(BigInt(params.imageId));
+  const imageData = await getImageByID(params.imageId);
 
   if (!imageData) {
     return <div>Image not found</div>;
