@@ -12,7 +12,7 @@ export function getImages(skip: number, take: number, search?: string) {
 }
 
 export function getImageByID(id: string) {
-  return prisma.images.findUnique({ where: { id } });
+  return prisma.images.findUnique({ where: { id },select:{url:true,prompt:true,height:true,width:true,size:true} });
 }
 
 export function countImages(search?: string) {

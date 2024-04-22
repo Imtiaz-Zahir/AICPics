@@ -33,7 +33,7 @@ export default function ImageDetailsContainer({
       </div>
       <div className="lg:w-1/4">
         <div className="flex items-center justify-center mb-7 w-full aspect-square"></div>
-        <button className="bg-green-800 py-3 w-full rounded flex items-center justify-center gap-1 text-white text-xl">
+        <a href={`/download?url=${imageData.url}`} download={`${imageData.prompt.split(/\s+/).slice(0, 10).join(" ")}.png`} className="bg-green-800 py-3 w-full rounded flex items-center justify-center gap-1 text-white text-xl">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -67,7 +67,7 @@ export default function ImageDetailsContainer({
             </g>
           </svg>
           DOWNLOAD
-        </button>
+        </a>
       </div>
     </>
   );
