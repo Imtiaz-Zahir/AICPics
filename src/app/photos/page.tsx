@@ -1,6 +1,6 @@
 import React from "react";
 import Gallery from "@/components/Gallery";
-import { getImages } from "@/services/imageService";
+import { getImages,countImages } from "@/services/imageService";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import ImageDetails from "@/components/ImageDetails";
@@ -26,8 +26,8 @@ export default async function page({
 
   const images = await getImages(skip, take, search);
 
-  const count = 500;
-  const totalPage = Math.round(count / take);
+  const count = await countImages(search);
+  const totalPage = Math.ceil(count / take);
 
   return (
     <>
@@ -39,7 +39,7 @@ export default async function page({
         <div className="flex items-center justify-between">
           {search ? (
             <h1 className="text-xl sm:text-2xl">
-              Total ${count} photos found for{" "}
+              Total {count} photos found for{" "}
               <span className="font-bold">{search}</span>{" "}
               {searchParams.page ? `- Page ${currentPage}` : ""}
             </h1>
@@ -90,7 +90,7 @@ export default async function page({
             <span className="px-4 py-3 border border-red-600 rounded">
               {currentPage}
             </span>
-            {currentPage <= totalPage ? (
+            {currentPage < totalPage ? (
               <Link
                 href={`/photos?${
                   searchParams.search

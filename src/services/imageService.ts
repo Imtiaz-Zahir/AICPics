@@ -15,6 +15,12 @@ export function getImageByID(id: string) {
   return prisma.images.findUnique({ where: { id } });
 }
 
+export function countImages(search?: string) {
+  return prisma.images.count({
+    where: search ? { prompt: { contains: search } } : undefined,
+  });
+}
+
 // function createImage(data: Prisma.imageCreateInput) {
 //   return prisma.image.create({ data });
 // }
