@@ -1,5 +1,4 @@
 import type { NextRequest } from "next/server";
-import { updateImageForDownload } from "@/services/imageService";
 
 export async function GET(request: NextRequest) {
   try {

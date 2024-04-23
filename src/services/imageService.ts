@@ -7,7 +7,7 @@ export function getImages(skip: number, take: number, search?: string) {
     take,
     skip,
     where: search ? { prompt: { contains: search } } : undefined,
-    orderBy: { createdAt: "desc", download: "desc"},
+    orderBy: { download: "desc"},
   });
 }
 
