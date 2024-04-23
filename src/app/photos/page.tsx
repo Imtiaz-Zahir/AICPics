@@ -116,7 +116,7 @@ export default async function page({
           </div>
         </div>
       </section>
-      <ImageDetails />
+      <ImageDetails/>
     </>
   );
 }

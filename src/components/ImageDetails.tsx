@@ -5,7 +5,7 @@ import ImageDetailsContainer from "./ImageDetailsContainer";
 import imageAction from "@/actions/imageAction";
 
 type Image = {
-  url: string;
+  displayImage: string;
   prompt: string;
   height: number;
   width: number;
@@ -69,7 +69,7 @@ export default function ImageDetails() {
           </svg>
         </button>
         <div className="w-[95%] mx-auto flex flex-col lg:flex-row gap-10">
-          <ImageDetailsContainer imageData={imageData} />
+          <ImageDetailsContainer imageData={{...imageData,id:imageID}} />
         </div>
       </div>
     </section>

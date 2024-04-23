@@ -1,17 +1,21 @@
 import type { NextRequest } from "next/server";
+import { updateImageForDownload } from "@/services/imageService";
 
 export async function GET(request: NextRequest) {
   try {
     // Get the image URL from the request query parameters
-    const imageURL = request.nextUrl.searchParams.get("url");
+    const imageID = request.nextUrl.searchParams.get("imageID");
 
     // Check if the URL is provided
-    if (!imageURL) {
-      return new Response("No image URL provided", { status: 400 });
+    if (!imageID) {
+      return new Response("No imageID provided", { status: 400 });
     }
 
+    // Update the download count for the image
+    const imageData = await updateImageForDownload(imageID);
+
     // Fetch the image from the provided URL as a stream
-    const imageResponse = await fetch(imageURL);
+    const imageResponse = await fetch(imageData.url);
 
     // Check if the image was fetched successfully
     if (!imageResponse.ok) {
@@ -22,7 +26,7 @@ export async function GET(request: NextRequest) {
     const headers = new Headers();
     headers.set("Content-Disposition", "attachment"); // Force download
     headers.set("Content-Type", "image/png"); // Set appropriate content type
-    // headers.set("Content-Length", imageBlob.size.toString()); // Set content length
+    headers.set("Content-Length", imageData.size.toString()); // Set content length
 
 
     // Return the image as a streamed response

@@ -1,7 +1,9 @@
 import React from "react";
+import Image from "next/image";
 
 type Image = {
-  url: string;
+  id: string;
+  displayImage: string;
   prompt: string;
   height: number;
   width: number;
@@ -15,25 +17,54 @@ export default function ImageDetailsContainer({
 }) {
   return (
     <>
-      <div
-        className="lg:w-3/4 flex flex-col items-center justify-center"
-        style={{ maxHeight: "calc(100vh - 100px)" }}
-      >
+      <div className="lg:w-3/4">
+        <div className="flex justify-center w-full border rounded-lg overflow-hidden">
+          
         {/* <Image
-            src="/creations/anime-tree-illustration.jpg"
-            // style={{ maxHeight: "100%", maxWidth: "100%" }}
-            height={1000}
-            width={100}
-            // fill={true}
-            alt="image"
+            src={imageData.displayImage}
+            style={{ maxHeight: "100%", maxWidth: "100%" }}
+            // height={1000}
+            // width={100}
+            fill={true}
+            alt={imageData.prompt}
+            unoptimized={true}
           /> */}
-        <img src={imageData.url} className="max-w-full max-h-full" alt="" />
+
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img            
+          style={{ maxHeight: "80vh"}}
+            src={imageData.displayImage}
+            // className="max-w-full max-h-full"
+            alt={imageData.prompt}
+          />
+        </div>
 
         <p>{imageData.prompt}</p>
       </div>
       <div className="lg:w-1/4">
-        <div className="flex items-center justify-center mb-7 w-full aspect-square"></div>
-        <a href={`/download?url=${imageData.url}`} download={`${imageData.prompt.split(/\s+/).slice(0, 10).join(" ")}.png`} className="bg-green-800 py-3 w-full rounded flex items-center justify-center gap-1 text-white text-xl">
+        <div className="flex items-center justify-center w-full aspect-square border rounded overflow-hidden"></div>
+        <ul className="my-5 text-lg flex flex-col gap-1">
+          <li>
+            Height : <span className="font-medium">{imageData.height}</span>
+          </li>
+          <li>
+            Width : <span className="font-medium">{imageData.width}</span>
+          </li>
+          <li>
+            Size :{" "}
+            <span className="font-medium">
+              {(imageData.size / (1024 * 1024)).toFixed(2)} MB
+            </span>
+          </li>
+        </ul>
+        <a
+          href={`/download?imageID=${imageData.id}`}
+          download={`${imageData.prompt
+            .split(/\s+/)
+            .slice(0, 10)
+            .join(" ")}.png`}
+          className="bg-green-800 py-3 w-full rounded flex items-center justify-center gap-1 text-white text-xl"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

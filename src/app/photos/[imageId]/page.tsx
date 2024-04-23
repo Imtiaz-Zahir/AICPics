@@ -11,7 +11,7 @@ export default async function page({ params }: { params: { imageId: string } }) 
 
   return (
     <section className="w-[95%] mx-auto mt-20 flex flex-col lg:flex-row gap-10">
-      <ImageDetailsContainer imageData={imageData} />
+      <ImageDetailsContainer imageData={{...imageData,id:params.imageId}} />
     </section>
   );
 }
