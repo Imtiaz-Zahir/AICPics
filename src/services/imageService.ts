@@ -7,7 +7,7 @@ export function getImages(skip: number, take: number, search?: string) {
     take,
     skip,
     where: search ? { prompt: { contains: search } } : undefined,
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "desc", download: "desc"},
   });
 }
 
@@ -18,6 +18,13 @@ export function getImageByID(id: string) {
 export function countImages(search?: string) {
   return prisma.images.count({
     where: search ? { prompt: { contains: search } } : undefined,
+  });
+}
+
+export function updateImageForDownload(id: string) {
+  return prisma.images.update({
+    where: { id },
+    data: { download: { increment: 1 } },
   });
 }
 

@@ -6,7 +6,7 @@ export default function Gallery({
   images,
   width,
 }: {
-  images: { id: string; prompt: string; thumbnailImage: string }[];
+  images: { id: string; prompt: string; displayImage: string }[];
   width: number;
 }) {
   // const [imagesArray, setImagesArray] = useState<
@@ -47,7 +47,7 @@ export default function Gallery({
             <ImageCart
               key={image.id}
               imageId={image.id}
-              url={image.thumbnailImage}
+              url={image.displayImage}
               prompt={image.prompt}
             />
           ))}
@@ -58,34 +58,18 @@ export default function Gallery({
 }
 
 function strackerImage(
-  images: { id: string; prompt: string; thumbnailImage: string }[],
+  images: { id: string; prompt: string; displayImage: string }[],
   columns: number
 ) {
   const array = [];
   for (let index = 0; index < columns; index++) {
     array.push([]);
   }
-  return images.reduce<{ id: string; prompt: string; thumbnailImage: string }[][]>(
+  return images.reduce<{ id: string; prompt: string; displayImage: string }[][]>(
     (acc, curr, index) => {
       acc[index % acc.length].push(curr);
       return acc;
     },
     array
-  );
-}
-
-function loading() {
-  return (
-    <>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-      <div className="aspect-square w-full bg-slate-700 rounded-lg border border-secondary animate-pulse"></div>
-    </>
   );
 }

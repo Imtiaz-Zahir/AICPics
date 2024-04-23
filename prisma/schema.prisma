@@ -14,6 +14,7 @@ model images {
   channelID      String
   createdAt      DateTime @db.Date
   displayImage   String   @unique(map: "displayImage_1")
+  download       Int
   height         Int
   id_            String   @unique(map: "id_1") @map("id")
   prompt         String

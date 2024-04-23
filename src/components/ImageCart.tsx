@@ -16,7 +16,7 @@ export default function ImageCart({
     <div className="rounded-lg border overflow-hidden w-full relative group">
       <Link href={`/photos/${imageId}`} data-image_id={imageId}>
         <Image
-          className="group-hover:scale-105 transition-all duration-300 cursor-pointer"
+          className="group-hover:scale-105 transition-all duration-300"
           src={url}
           height={450}
           width={450}
