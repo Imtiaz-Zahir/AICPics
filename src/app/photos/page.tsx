@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Gallery from "@/components/Gallery";
 import { getImages,countImages } from "@/services/imageService";
 import Link from "next/link";
@@ -9,6 +10,13 @@ import ImageDetails from "@/components/ImageDetails";
 //   getSearch,
 //   createSearch,
 // } from "@/services/searchService";
+
+
+export const metadata: Metadata = {
+  title: "Photos",
+  description:
+    "Over 20 million free AI-generated photos available for download.",
+};
 
 export default async function page({
   searchParams,

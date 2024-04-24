@@ -13,9 +13,12 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Synthetic Gallery",
+  title: {
+    default:"AIGPic - Free AI-Generated Photos",
+    template: "%s - AIGPic"
+  },
   description:
-    "Over 20 million free AI-generated photos available for download.",
+    "Over 20 million free AI-generated photos available for free download.",
 };
 
 export default function RootLayout({

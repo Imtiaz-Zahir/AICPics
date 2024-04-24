@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -12,7 +12,7 @@ export function getImages(skip: number, take: number, search?: string) {
 }
 
 export function getImageByID(id: string) {
-  return prisma.images.findUnique({ where: { id },select:{displayImage:true,prompt:true,height:true,width:true,size:true} });
+  return prisma.images.findUnique({ where: { id },select:{displayImage:true,prompt:true,height:true,width:true,size:true,thumbnailImage:true} });
 }
 
 export function countImages(search?: string) {
