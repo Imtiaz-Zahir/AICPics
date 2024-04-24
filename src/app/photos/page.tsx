@@ -1,7 +1,7 @@
-import React from "react";
+import { cache } from "react";
 import type { Metadata } from "next";
 import Gallery from "@/components/Gallery";
-import { getImages,countImages } from "@/services/imageService";
+import { getImages, countImages } from "@/services/imageService";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import ImageDetails from "@/components/ImageDetails";
@@ -11,18 +11,27 @@ import ImageDetails from "@/components/ImageDetails";
 //   createSearch,
 // } from "@/services/searchService";
 
-
-export const metadata: Metadata = {
-  title: "Photos",
-  description:
-    "Over 20 million free AI-generated photos available for download.",
+type PageParams = {
+  searchParams: { search?: string; page?: string };
 };
 
-export default async function page({
+const totalImages = cache(countImages);
+
+export async function generateMetadata({
   searchParams,
-}: {
-  searchParams: { search?: string; page?: string };
-}) {
+}: PageParams): Promise<Metadata> {
+  const count = await totalImages(searchParams.search);
+  return {
+    title: `${count} ${
+      searchParams.search ?? ""
+    } photos available for free download`,
+    description: `${count} ${
+      searchParams.search ?? ""
+    } AI generated photos available for free download.`,
+  };
+}
+
+export default async function page({ searchParams }: PageParams) {
   const cookieStore = cookies();
   const width = Number(cookieStore.get("width")?.value ?? 1279);
 
@@ -34,7 +43,7 @@ export default async function page({
 
   const images = await getImages(skip, take, search);
 
-  const count = await countImages(search);
+  const count = await totalImages(search);
   const totalPage = Math.ceil(count / take);
 
   return (
@@ -124,7 +133,7 @@ export default async function page({
           </div>
         </div>
       </section>
-      <ImageDetails/>
+      <ImageDetails />
     </>
   );
 }
