@@ -4,7 +4,7 @@ import Gallery from "@/components/Gallery";
 import { getImages, countImages } from "@/services/imageService";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import ImageDetails from "@/components/ImageDetails";
+import ModalBox from "@/components/ModalBox";
 // import {
 //   updateSearch,
 //   getSearch,
@@ -74,7 +74,7 @@ export default async function page({ searchParams }: PageParams) {
           <option value="panoramic">Panoramic</option>
         </select> */}
         </div>
-        <Gallery key={currentPage} images={images} width={width} />
+        <Gallery images={images} width={width} />
         <div className="flex items-center justify-between text-xl">
           <p>
             Page <span className="font-semibold">{currentPage}</span> of{" "}
@@ -133,7 +133,7 @@ export default async function page({ searchParams }: PageParams) {
           </div>
         </div>
       </section>
-      <ImageDetails />
+      <ModalBox />
     </>
   );
 }

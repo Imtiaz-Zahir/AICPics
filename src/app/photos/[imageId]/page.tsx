@@ -23,7 +23,10 @@ export async function generateMetadata({
     };
   }
   return {
-    title: `Free download - ${imageData.prompt} AI generated image`,
+    title: `Free download - ${imageData.prompt
+      .split(/\s+/)
+      .slice(0, 6)
+      .join(" ")} AI generated image`,
     description: `Take a look at this ${imageData.prompt} AI generated image and discover more similar AI generated images. AIGPic offers over 20 million free AI generated images for download.`,
     openGraph:{
       images:[

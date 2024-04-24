@@ -12,7 +12,8 @@ type Image = {
   size: number;
 };
 
-export default function ImageDetails() {
+export default function ModalBox() {
+  console.log("ModalBox");
   const appContext = useContext(context);
   const [imageData, setImageData] = useState<Image | null>(null);
 
@@ -20,15 +21,27 @@ export default function ImageDetails() {
   const setImageID = appContext?.setImageID;
 
   useEffect(() => {
-    Array.from(document.getElementsByTagName("a")).forEach((element) => {
-      const imageID = element.getAttribute("data-image_id");
-      if (!imageID) return;
-      element.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (!setImageID) return;
-        setImageID(imageID);
+    function AddClickEvent() {
+      Array.from(document.getElementsByTagName("a")).forEach((element) => {
+        const imageID = element.getAttribute("data-image_id");
+
+        if (!imageID) return;
+
+        element.addEventListener("click", (event) => {
+          event.preventDefault();
+          if (!setImageID) return;
+          setImageID(imageID);
+        });
       });
-    });
+    }
+
+    function RemoveClickEvent() {
+      console.log("RemoveClickEvent");
+    }
+
+    AddClickEvent();
+
+    // return RemoveClickEvent;
   }, [setImageID]);
 
   useEffect(() => {
@@ -40,6 +53,11 @@ export default function ImageDetails() {
     if (appContext?.imageID) {
       imageAction(appContext.imageID).then((data) => {
         setImageData(data);
+        window.history.pushState({}, "", "/photos/" + appContext.imageID);
+        document.title = `Free download - ${data?.prompt
+          .split(/\s+/)
+          .slice(0, 6)
+          .join(" ")} AI generated image`;
       });
     }
   }, [appContext?.imageID]);
@@ -50,7 +68,10 @@ export default function ImageDetails() {
     <section className="fixed w-screen h-screen bg-[#00000080] flex items-center justify-center z-20">
       <div className="bg-white py-10 rounded-lg w-[90vw] h-[90vh] overflow-y-scroll">
         <button
-          onClick={() => setImageID(null)}
+          onClick={() => {
+            setImageID(null);
+            window.history.back();
+          }}
           className="absolute top-2 right-2 text-white bg-red-600 p-2 rounded-full"
         >
           <svg
@@ -69,7 +90,7 @@ export default function ImageDetails() {
           </svg>
         </button>
         <div className="w-[95%] mx-auto flex flex-col lg:flex-row gap-10">
-          <ImageDetailsContainer imageData={{...imageData,id:imageID}} />
+          <ImageDetailsContainer imageData={{ ...imageData, id: imageID }} />
         </div>
       </div>
     </section>
