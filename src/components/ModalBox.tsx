@@ -13,7 +13,6 @@ type Image = {
 };
 
 export default function ModalBox() {
-  console.log("ModalBox");
   const appContext = useContext(context);
   const [imageData, setImageData] = useState<Image | null>(null);
 

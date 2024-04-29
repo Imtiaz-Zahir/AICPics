@@ -12,9 +12,10 @@ export default function Search({ hero }: { hero?: boolean }) {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (search.length > 0) {
-      router.push(`/photos?search=${search.replace(" ", "+")}`);
+    if (search.length === 0) {
+      router.push("/photos");
     }
+    router.push(`/photos?search=${search.replace(" ", "+")}`);
   }
 
   useEffect(() => {

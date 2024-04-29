@@ -4,15 +4,25 @@ const prisma = new PrismaClient();
 
 export function getImages(skip: number, take: number, search?: string) {
   return prisma.images.findMany({
-    take,
+    take: take === 0 ? undefined : take,
     skip,
-    where: search ? { prompt: { contains: search } } : undefined,
-    orderBy: { download: "desc"},
+    where: search ? { prompt: { contains: search } } : { download: { gt: 0 } },
+    orderBy: { download: "desc" },
   });
 }
 
 export function getImageByID(id: string) {
-  return prisma.images.findUnique({ where: { id },select:{displayImage:true,prompt:true,height:true,width:true,size:true,thumbnailImage:true} });
+  return prisma.images.findUnique({
+    where: { id },
+    select: {
+      displayImage: true,
+      prompt: true,
+      height: true,
+      width: true,
+      size: true,
+      thumbnailImage: true,
+    },
+  });
 }
 
 export function countImages(search?: string) {
