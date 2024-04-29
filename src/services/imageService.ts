@@ -4,10 +4,16 @@ const prisma = new PrismaClient();
 
 export function getImages(skip: number, take: number, search?: string) {
   return prisma.images.findMany({
-    take: take === 0 ? undefined : take,
+    take,
     skip,
     where: search ? { prompt: { contains: search } } : { download: { gt: 0 } },
     orderBy: { download: "desc" },
+  });
+}
+
+export function getImagesForSitemap() {
+  return prisma.images.findMany({
+    select: { id: true },
   });
 }
 
