@@ -1,21 +1,23 @@
-import React from "react";
+import {cache} from "react";
 import type { Metadata } from "next";
-import { getImageByID , getImages } from "@/services/imageService";
-import ImageDetailsContainer from "@/components/ImageDetailsContainer";
+import { getImageByID , getALLImagesID } from "@/services/imageService";
+import ImageDetails from "@/components/ImageDetails";
 
 type PageParams = {
   params:{imageId: string;}
 };
 
+const getImageDataByID = cache(getImageByID)
+
 export async function generateStaticParams() {
-  const images = await getImages(0, 100);
+  const images = await getALLImagesID();
   return images.map(({id})=>id)
 }
 
 export async function generateMetadata({
   params,
 }: PageParams): Promise<Metadata> {
-  const imageData = await getImageByID(params.imageId);
+  const imageData = await getImageDataByID(params.imageId);
   if (!imageData) {
     return {
       title: "Image not found",
@@ -41,7 +43,7 @@ export async function generateMetadata({
 export default async function page({
   params,
 }: PageParams) {
-  const imageData = await getImageByID(params.imageId);
+  const imageData = await getImageDataByID(params.imageId);
 
   if (!imageData) {
     return <div>Image not found</div>;
@@ -49,7 +51,7 @@ export default async function page({
 
   return (
     <section className="w-[95%] mx-auto mt-20 flex flex-col lg:flex-row gap-10">
-      <ImageDetailsContainer imageData={{ ...imageData, id: params.imageId }} />
+      <ImageDetails imageData={{ ...imageData, id: params.imageId }} />
     </section>
   );
 }

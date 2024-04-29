@@ -6,12 +6,12 @@ export function getImages(skip: number, take: number, search?: string) {
   return prisma.images.findMany({
     take,
     skip,
-    where: search ? { prompt: { contains: search } } : { download: { gt: 0 } },
+    where: search ? { prompt: { contains: search } } : undefined,
     orderBy: { download: "desc" },
   });
 }
 
-export function getImagesForSitemap() {
+export function getALLImagesID() {
   return prisma.images.findMany({
     select: { id: true },
   });
@@ -43,24 +43,3 @@ export function updateImageForDownload(id: string) {
     data: { download: { increment: 1 } },
   });
 }
-
-// function createImage(data: Prisma.imageCreateInput) {
-//   return prisma.image.create({ data });
-// }
-
-// function getImage(where: Prisma.imageWhereUniqueInput) {
-//   return prisma.image.findUnique({ where });
-// }
-
-// function updateImage(
-//   where: Prisma.imageWhereUniqueInput,
-//   data: Prisma.imageUpdateInput
-// ) {
-//   return prisma.image.update({ where, data });
-// }
-
-// function deleteImage(where: Prisma.imageWhereUniqueInput) {
-//   return prisma.image.delete({ where });
-// }
-
-// export { createImage, getImages, getImage, updateImage, deleteImage };

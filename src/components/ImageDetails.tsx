@@ -42,7 +42,7 @@ export default function ImageDetailsContainer({
         <p>{imageData.prompt}</p>
       </div>
       <div className="lg:w-1/4">
-        <div className="flex items-center justify-center w-full aspect-square border rounded overflow-hidden"></div>
+        {/* <div className="flex items-center justify-center w-full aspect-square border rounded overflow-hidden"></div> */}
         <ul className="my-5 text-lg flex flex-col gap-1">
           <li>
             Height : <span className="font-medium">{imageData.height}</span>

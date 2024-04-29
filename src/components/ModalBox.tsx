@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { context } from "@/app/Context";
-import ImageDetailsContainer from "./ImageDetailsContainer";
+import ImageDetails from "./ImageDetails";
 import imageAction from "@/actions/imageAction";
 
 type Image = {
@@ -18,30 +18,6 @@ export default function ModalBox() {
 
   const imageID = appContext?.imageID;
   const setImageID = appContext?.setImageID;
-
-  useEffect(() => {
-    function AddClickEvent() {
-      Array.from(document.getElementsByTagName("a")).forEach((element) => {
-        const imageID = element.getAttribute("data-image_id");
-
-        if (!imageID) return;
-
-        element.addEventListener("click", (event) => {
-          event.preventDefault();
-          if (!setImageID) return;
-          setImageID(imageID);
-        });
-      });
-    }
-
-    function RemoveClickEvent() {
-      console.log("RemoveClickEvent");
-    }
-
-    AddClickEvent();
-
-    // return RemoveClickEvent;
-  }, [setImageID]);
 
   useEffect(() => {
     if (appContext?.imageID) {
@@ -89,7 +65,7 @@ export default function ModalBox() {
           </svg>
         </button>
         <div className="w-[95%] mx-auto flex flex-col lg:flex-row gap-10">
-          <ImageDetailsContainer imageData={{ ...imageData, id: imageID }} />
+          <ImageDetails imageData={{ ...imageData, id: imageID }} />
         </div>
       </div>
     </section>

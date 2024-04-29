@@ -1,18 +1,16 @@
-// "use client";
-// import { useEffect, useState } from "react";
+"use client";
+import { useState,useEffect, use } from "react";
 import ImageCart from "./ImageCart";
 
 export default function Gallery({
   images,
-  width,
 }: {
   images: { id: string; prompt: string; displayImage: string }[];
-  width: number;
 }) {
-  // const [imagesArray, setImagesArray] = useState<
-  //   { id: string; prompt: string; url: string }[][]
-  // >();
-
+  const [width, setWidth] = useState<number>(1279);
+  useEffect(() => {
+      setWidth(window.innerWidth);
+  }, []);
 
   const imagesArray = (() => {
     if (width > 1279) {
@@ -28,18 +26,12 @@ export default function Gallery({
     }
   })();
 
-  // if (!imagesArray) {
-  //   return (
-      // <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1 w-full my-5">
-  //       {loading()}
-  //     </div>
-  //   );
-  // }
-
   return (
     <div
       className="grid gap-1 w-full mt-2 mb-5"
-      style={{  gridTemplateColumns: `repeat(${imagesArray.length}, minmax(0, 1fr))` }}
+      style={{
+        gridTemplateColumns: `repeat(${imagesArray.length}, minmax(0, 1fr))`,
+      }}
     >
       {imagesArray.map((photos, index) => (
         <div key={index} className="flex flex-col gap-1">
@@ -65,11 +57,10 @@ function strackerImage(
   for (let index = 0; index < columns; index++) {
     array.push([]);
   }
-  return images.reduce<{ id: string; prompt: string; displayImage: string }[][]>(
-    (acc, curr, index) => {
-      acc[index % acc.length].push(curr);
-      return acc;
-    },
-    array
-  );
+  return images.reduce<
+    { id: string; prompt: string; displayImage: string }[][]
+  >((acc, curr, index) => {
+    acc[index % acc.length].push(curr);
+    return acc;
+  }, array);
 }

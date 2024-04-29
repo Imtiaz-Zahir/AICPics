@@ -1,12 +1,10 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
-import { context } from "@/app/Context";
+import { useEffect, useState } from "react";
 import Search from "./Search";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Nav() {
-  const appContext = useContext(context);
   const [menuOpen, setMenuOpen] = useState(false);
   
 
@@ -31,9 +29,6 @@ export default function Nav() {
         .getElementsByTagName("nav")[0]
         .classList.toggle("scroll", window.scrollY > 0);
     });
-
-    // set width in cookie
-    document.cookie = `width=${window.innerWidth};  path=/`
   }, []);
 
   return (
@@ -72,7 +67,7 @@ export default function Nav() {
           }
         ></path>
       </svg>
-      {/* <div
+      <div
         className={`absolute sm:static bg-red-500 sm:bg-transparent w-full sm:w-auto h-screen sm:h-auto -z-10 ${
           menuOpen ? "left-0" : "left-full"
         } top-16 p-8 sm:p-0 flex flex-col sm:flex-row items-center gap-7 transition-all duration-300`}
@@ -82,10 +77,10 @@ export default function Nav() {
           <li>
             <Link href={"/photos"}>Photos</Link>
           </li>
-          <li>
+          {/* <li>
             <Link href={"/about"}>About</Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link href={"/favorites"} className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +97,7 @@ export default function Nav() {
                 {appContext?.likedImages.length ?? 0}
               </span>
             </Link>
-          </li>
+          </li> */}
         </ul>
         <div>
           {false ? (
@@ -113,7 +108,7 @@ export default function Nav() {
             </button>
           )}
         </div>
-      </div> */}
+      </div>
     </nav>
   );
 }

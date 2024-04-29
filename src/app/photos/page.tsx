@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Gallery from "@/components/Gallery";
 import { getImages, countImages } from "@/services/imageService";
 import Link from "next/link";
-import { cookies } from "next/headers";
 import ModalBox from "@/components/ModalBox";
 // import {
 //   updateSearch,
@@ -21,20 +20,22 @@ export async function generateMetadata({
   searchParams,
 }: PageParams): Promise<Metadata> {
   const count = await totalImages(searchParams.search);
+  const availableImages = count
+    .toString()[0]
+    .concat("0".repeat(count.toString().length - 1))
+    .concat("+");
+
   return {
-    title: `${count} ${
+    title: `${availableImages} ${
       searchParams.search ?? ""
     } photos available for free download`,
-    description: `${count} ${
+    description: `${availableImages} ${
       searchParams.search ?? ""
     } AI generated photos available for free download.`,
   };
 }
 
 export default async function page({ searchParams }: PageParams) {
-  const cookieStore = cookies();
-  const width = Number(cookieStore.get("width")?.value ?? 1279);
-
   const take = 30;
 
   const currentPage = Number(searchParams.page ?? 1);
@@ -74,7 +75,7 @@ export default async function page({ searchParams }: PageParams) {
           <option value="panoramic">Panoramic</option>
         </select> */}
         </div>
-        <Gallery images={images} width={width} />
+        <Gallery images={images} />
         <div className="flex items-center justify-between text-xl">
           <p>
             Page <span className="font-semibold">{currentPage}</span> of{" "}

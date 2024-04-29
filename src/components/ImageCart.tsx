@@ -1,4 +1,5 @@
-import React from "react";
+import { useContext } from "react";
+import { context } from "@/app/Context";
 import Image from "next/image";
 import Link from "next/link";
 import Favorite from "./Favorite";
@@ -12,9 +13,14 @@ export default function ImageCart({
   url: string;
   prompt: string;
 }) {
+  const appContext = useContext(context);
+  const setImageID = appContext?.setImageID;
+
+  if (!setImageID) return null;
+
   return (
     <div className="rounded-lg border overflow-hidden w-full relative group">
-      <Link href={`/photos/${imageId}`} data-image_id={imageId}>
+      <Link href={`/photos/${imageId}`} onClick={() => setImageID(imageId)}>
         <Image
           className="group-hover:scale-105 transition-all duration-300"
           src={url}
