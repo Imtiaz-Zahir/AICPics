@@ -103,7 +103,7 @@ export default function Nav() {
           {false ? (
             <Image src={"/"} height={36} width={36} priority={true} alt="sf" />
           ) : (
-            <button className="bg-black text-white py-2 px-5 rounded">
+            <button type="button" className="bg-black text-white py-2 px-5 rounded cursor-not-allowed">
               Sign in
             </button>
           )}

@@ -44,6 +44,7 @@ export default function ImageDetailsContainer({
           <img
             style={{ maxHeight: "80vh" }}
             src={imageData.displayImage}
+            loading="lazy"
             // className="max-w-full max-h-full"
             alt={imageData.prompt}
           />

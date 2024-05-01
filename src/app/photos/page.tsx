@@ -43,7 +43,7 @@ export default async function page({ searchParams }: PageParams) {
   const skip = (currentPage - 1) * take;
 
   const images = await getImages(skip, take, search);
-
+  
   const count = await totalImages(search);
   const totalPage = Math.ceil(count / take);
 

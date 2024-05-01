@@ -3,22 +3,43 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export function getImages(skip: number, take: number, search?: string) {
-  return prisma.images.findMany({
+  // if (search) {
+  //   return prisma.photos.aggregateRaw({
+  //     pipeline: [
+  //       {
+  //         $search: {
+  //           index: "search_prompt",
+  //           text: {
+  //             query: search,
+  //             path: {
+  //               wildcard: "*",
+  //             },
+  //           },
+  //         },
+  //       },
+  //       {
+  //         $limit: take,
+  //       },
+  //       { $sort: { download: 1 } },
+  //     ],
+  //   });
+  // }
+  return prisma.photos.findMany({
     take,
     skip,
     where: search ? { prompt: { contains: search } } : undefined,
-    orderBy: { download: "desc" }
+    orderBy: { download: "desc" },
   });
 }
 
 export function getALLImagesID() {
-  return prisma.images.findMany({
+  return prisma.photos.findMany({
     select: { id: true },
   });
 }
 
 export function getImageByID(id: string) {
-  return prisma.images.findUnique({
+  return prisma.photos.findUnique({
     where: { id },
     select: {
       displayImage: true,
@@ -32,13 +53,13 @@ export function getImageByID(id: string) {
 }
 
 export function countImages(search?: string) {
-  return prisma.images.count({
+  return prisma.photos.count({
     where: search ? { prompt: { contains: search } } : undefined,
   });
 }
 
 export function updateImageForDownload(id: string) {
-  return prisma.images.update({
+  return prisma.photos.update({
     where: { id },
     data: { download: { increment: 1 } },
   });

@@ -7,20 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model images {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+model photos {
+  id             String   @id @map("_id")
   v              Int      @map("__v")
   build_At       DateTime @db.Date
   channelID      String
   createdAt      DateTime @db.Date
-  displayImage   String   @unique(map: "displayImage_1")
+  displayImage   String
   download       Int
   height         Int
-  id_            String   @unique(map: "id_1") @map("id")
   prompt         String
   size           Int
-  thumbnailImage String   @unique(map: "thumbnailImage_1")
+  thumbnailImage String
   updatedAt      DateTime @db.Date
-  url            String   @unique(map: "url_1")
+  url            String
   width          Int
 }
