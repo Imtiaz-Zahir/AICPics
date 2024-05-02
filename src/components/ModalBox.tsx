@@ -21,11 +21,6 @@ export default function ModalBox() {
 
   useEffect(() => {
     if (appContext?.imageID) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    if (appContext?.imageID) {
       imageAction(appContext.imageID).then((data) => {
         setImageData(data);
         window.history.pushState({}, "", "/photos/" + appContext.imageID);
@@ -34,6 +29,11 @@ export default function ModalBox() {
           .slice(0, 6)
           .join(" ")} AI generated image`;
       });
+
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+      setImageData(null);
     }
   }, [appContext?.imageID]);
 

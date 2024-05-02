@@ -4,8 +4,8 @@ import "./globals.css";
 import { Context } from "./Context";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700", "900"],
@@ -14,11 +14,11 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: {
-    default:"AIGPic - Free AI-Generated Photos",
-    template: "%s - AIGPic"
+    default: "AIGPic - Free AI-Generated Photos",
+    template: "%s - AIGPic",
   },
   description:
-    "Over 20 million free AI-generated photos available for free download.",
+    "Discover a vast library of over 20 million stunning, AI-generated photos ready for free download on our website. From breathtaking landscapes to captivating portraits, explore endless possibilities for your creative projects with our diverse collection.",
 };
 
 export default function RootLayout({
@@ -34,8 +34,8 @@ export default function RootLayout({
           {children}
         </Context>
         <Footer />
-        <Analytics/>
-      <SpeedInsights/>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -68,7 +68,7 @@ export default function Nav() {
         ></path>
       </svg>
       <div
-        className={`absolute sm:static bg-red-500 sm:bg-transparent w-full sm:w-auto h-screen sm:h-auto -z-10 ${
+        className={`absolute sm:static bg-white sm:bg-transparent w-full sm:w-auto h-screen sm:h-auto -z-10 ${
           menuOpen ? "left-0" : "left-full"
         } top-16 p-8 sm:p-0 flex flex-col sm:flex-row items-center gap-7 transition-all duration-300`}
         onClick={() => setMenuOpen(false)}
