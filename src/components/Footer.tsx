@@ -48,11 +48,10 @@ export default function Footer() {
             placeholder="Message"
             className="p-2 w-full rounded-md focus:outline-none"
           />
-          <button
+          {/* <button
             type="submit"
-            disabled
             className="bg-gray-600 text-white p-2 rounded-md w-full"
-          >Submit</button>
+          >Submit</button> */}
         </form>
       </div>
     </footer>

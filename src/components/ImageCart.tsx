@@ -26,6 +26,7 @@ export default function ImageCart({
           src={url}
           height={450}
           width={450}
+          loading="lazy"
           alt={prompt}
           unoptimized={true}
         />

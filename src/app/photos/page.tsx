@@ -16,21 +16,14 @@ type PageParams = {
 
 const totalImages = cache(countImages);
 
-function roundToNearestPowerOf10(number:number) {
-  // Get the order of magnitude of the number
-  let orderOfMagnitude = Math.floor(Math.log10(number));
-  // Calculate the power of 10
-  let powerOf10 = Math.pow(10, orderOfMagnitude);
-  // Round the number to the nearest power of 10
-  let roundedNumber = Math.round(number / powerOf10) * powerOf10;
-  return roundedNumber;
-}
-
 export async function generateMetadata({
   searchParams,
 }: PageParams): Promise<Metadata> {
   const count = await totalImages(searchParams.search);
-  const availableImages = roundToNearestPowerOf10(count);
+  const availableImages = count
+    .toString()[0]
+    .concat("0".repeat(count.toString().length - 1))
+    .concat("+");
 
   return {
     title: `${availableImages} ${
@@ -43,7 +36,7 @@ export async function generateMetadata({
 }
 
 export default async function page({ searchParams }: PageParams) {
-  const take = 30;
+  const take = 100;
 
   const currentPage = Number(searchParams.page ?? 1);
   const search = searchParams.search?.replace("+", " ");

@@ -1,6 +1,6 @@
-"use client";
 import React from "react";
 import Image from "next/image";
+import Prompt from "@/components/Prompt";
 
 type Image = {
   id: string;
@@ -16,47 +16,22 @@ export default function ImageDetailsContainer({
 }: {
   imageData: Image;
 }) {
-  const [copyStatus, setCopyStatus] = React.useState("copy");
-
-  function copyToClipboard() {
-    navigator.clipboard.writeText(imageData.prompt);
-    setCopyStatus("copied");
-    setTimeout(() => {
-      setCopyStatus("copy");
-    }, 3000);
-  }
-
   return (
     <>
       <div className="lg:w-3/4">
         <div className="flex justify-center w-full border rounded-lg overflow-hidden">
-          {/* <Image
+          <Image
             src={imageData.displayImage}
-            style={{ maxHeight: "100%", maxWidth: "100%" }}
-            // height={1000}
-            // width={100}
-            fill={true}
+            style={{ maxHeight: "80vh" }}
+            priority={true}
+            height={640}
+            width={640}
             alt={imageData.prompt}
             unoptimized={true}
-          /> */}
-
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            style={{ maxHeight: "80vh" }}
-            src={imageData.displayImage}
-            loading="lazy"
-            // className="max-w-full max-h-full"
-            alt={imageData.prompt}
           />
         </div>
 
-        <div className="mt-5 gap-2 border rounded">
-          <p className="font-semibold pl-5 py-2 border-b">Prompt :</p>
-          <div className="text-lg flex justify-between">
-            <h1 className="pl-5 py-2">{imageData.prompt}</h1>
-            <button type="button" className="border-l px-3" onClick={copyToClipboard}>{copyStatus}</button>
-          </div>
-        </div>
+        <Prompt prompt={imageData.prompt} />
       </div>
       <div className="lg:w-1/4">
         {/* <div className="flex items-center justify-center w-full aspect-square border rounded overflow-hidden"></div> */}

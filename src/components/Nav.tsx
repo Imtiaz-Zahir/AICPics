@@ -99,15 +99,15 @@ export default function Nav() {
             </Link>
           </li> */}
         </ul>
-        <div>
+        {/* <div>
           {false ? (
             <Image src={"/"} height={36} width={36} priority={true} alt="sf" />
           ) : (
-            <button type="button" className="bg-black text-white py-2 px-5 rounded cursor-not-allowed">
+            <button type="button" className="bg-black text-white py-2 px-5 rounded">
               Sign in
             </button>
           )}
-        </div>
+        </div> */}
       </div>
     </nav>
   );
