@@ -6,6 +6,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import ModalBox from "@/components/ModalBox";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700", "900"],
@@ -32,6 +33,7 @@ export default function RootLayout({
         <Context>
           <Nav />
           {children}
+          <ModalBox />
         </Context>
         <Footer />
         <Analytics />

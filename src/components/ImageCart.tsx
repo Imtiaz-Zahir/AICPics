@@ -1,3 +1,4 @@
+"use client";
 import { useContext } from "react";
 import { context } from "@/app/Context";
 import Image from "next/image";
@@ -31,10 +32,10 @@ export default function ImageCart({
           unoptimized={true}
         />
       </Link>
-      {/* <div className="absolute top-0 sm:-top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">
-        <Favorite imageId={imageId} />
+      <div className="absolute top-0 sm:-top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">
+        <Favorite imageData={{ id: imageId, displayImage: url, prompt }} />
 
-        <Link href={`/api/image?download=${url}`} download={true}>
+        {/* <Link href={`/api/image?download=${url}`} download={true}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -67,8 +68,8 @@ export default function ImageCart({
               </g>
             </g>
           </svg>
-        </Link>
-      </div> */}
+        </Link> */}
+      </div>
     </div>
   );
 }

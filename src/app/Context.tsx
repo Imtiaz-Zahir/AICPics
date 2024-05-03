@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
 type ContextProps = {
@@ -7,6 +7,14 @@ type ContextProps = {
   setLikedImages: Dispatch<SetStateAction<string[]>>;
   imageID: string | null;
   setImageID: Dispatch<SetStateAction<string | null>>;
+  favorites: FavoriteImage[];
+  setFavorites: Dispatch<SetStateAction<FavoriteImage[]>>;
+};
+
+type FavoriteImage = {
+  id: string;
+  prompt: string;
+  displayImage: string;
 };
 
 export const context = createContext<ContextProps | null>(null);
@@ -14,9 +22,30 @@ export const context = createContext<ContextProps | null>(null);
 export function Context({ children }: { children: React.ReactNode }) {
   const [likedImages, setLikedImages] = useState<string[]>([]);
   const [imageID, setImageID] = useState<string | null>(null);
+  const [favorites, setFavorites] = useState<FavoriteImage[]>([]);
+
+  useEffect(() => {
+    const favoritesImages: FavoriteImage[] = JSON.parse(
+      localStorage.getItem("favorites") || "[]"
+    );
+    setFavorites(favoritesImages);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   return (
-    <context.Provider value={{ likedImages, setLikedImages, imageID, setImageID }}>
+    <context.Provider
+      value={{
+        likedImages,
+        setLikedImages,
+        imageID,
+        setImageID,
+        favorites,
+        setFavorites,
+      }}
+    >
       {children}
     </context.Provider>
   );

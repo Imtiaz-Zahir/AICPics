@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Gallery from "@/components/Gallery";
 import { getImages, countImages } from "@/services/imageService";
 import Link from "next/link";
-import ModalBox from "@/components/ModalBox";
 
 type PageParams = {
   searchParams: { search?: string; page?: string };
@@ -58,13 +57,12 @@ export default async function page({ searchParams }: PageParams) {
   const totalPage = Math.ceil(count / take);
 
   return (
-    <>
       <section className="w-[95vw] mx-auto mt-20">
         <h2 className="text-3xl sm:text-7xl font-bold text-center mb-3">
           Explore Gallery <br />
           Find Your Imagination
         </h2>
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between"> */}
           {search ? (
             <h1 className="text-xl sm:text-2xl">
               Total {count} photos found for{" "}
@@ -84,7 +82,7 @@ export default async function page({ searchParams }: PageParams) {
           <option value="square">Square</option>
           <option value="panoramic">Panoramic</option>
         </select> */}
-        </div>
+        {/* </div> */}
         <Gallery images={images} />
         <div className="flex items-center justify-between text-xl">
           <p>
@@ -144,7 +142,5 @@ export default async function page({ searchParams }: PageParams) {
           </div>
         </div>
       </section>
-      <ModalBox />
-    </>
   );
 }

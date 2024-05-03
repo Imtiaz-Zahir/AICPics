@@ -20,14 +20,12 @@ export default function ImageDetailsContainer({
     <>
       <div className="lg:w-3/4">
         <div className="flex justify-center w-full border rounded-lg overflow-hidden">
-          <Image
-            src={imageData.displayImage}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             style={{ maxHeight: "80vh" }}
-            priority={true}
-            height={640}
-            width={640}
+            src={imageData.displayImage}
+            // className="max-w-full max-h-full"
             alt={imageData.prompt}
-            unoptimized={true}
           />
         </div>
 

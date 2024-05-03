@@ -1,5 +1,5 @@
 "use client";
-import { useState,useEffect, use } from "react";
+import { useState,useEffect } from "react";
 import ImageCart from "./ImageCart";
 
 export default function Gallery({

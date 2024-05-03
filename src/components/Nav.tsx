@@ -1,12 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { context } from "@/app/Context";
 import Search from "./Search";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Nav() {
+  const appContext = useContext(context);
   const [menuOpen, setMenuOpen] = useState(false);
-  
 
   useEffect(() => {
     // stop scrolling when menu is open
@@ -80,7 +81,7 @@ export default function Nav() {
           {/* <li>
             <Link href={"/about"}>About</Link>
           </li> */}
-          {/* <li>
+          <li>
             <Link href={"/favorites"} className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -94,10 +95,10 @@ export default function Nav() {
                 ></path>
               </svg>
               <span className="absolute bottom-0 text-sm right-0">
-                {appContext?.likedImages.length ?? 0}
+                {appContext?.favorites.length ?? 0}
               </span>
             </Link>
-          </li> */}
+          </li>
         </ul>
         {/* <div>
           {false ? (
