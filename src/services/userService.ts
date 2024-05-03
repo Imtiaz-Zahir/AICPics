@@ -1,11 +1,23 @@
-// 'use server';
-// import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-// function createUser(data: Prisma.userCreateInput) {
-//   return prisma.user.create({ data });
-// }
+export function createUser(
+  id: string,
+  name: string,
+  email: string,
+  image: string
+) {
+  return prisma.user.create({ data: { id,email, name, image } });
+}
+
+export function getUsersByID(id: string) {
+  return prisma.user.findUnique({ where: { id } });
+}
+
+export function getUsersByEmail(email: string) {
+  return prisma.user.findUnique({ where: { email } });
+}
 
 // function getUsers(where?: Prisma.userWhereInput) {
 //   return prisma.user.findMany({ where });

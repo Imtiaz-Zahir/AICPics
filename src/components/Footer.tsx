@@ -8,7 +8,7 @@ export default function Footer() {
       <div>
         <Link href="/">
           <Image
-            src="/logo.png"
+            src="/logo-white.png"
             alt="Synthetic Gallery"
             height={50}
             width={150}

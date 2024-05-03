@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
+import { SessionProvider } from "next-auth/react";
 
 type ContextProps = {
   likedImages: string[];
@@ -46,7 +47,7 @@ export function Context({ children }: { children: React.ReactNode }) {
         setFavorites,
       }}
     >
-      {children}
+      <SessionProvider>{children}</SessionProvider>
     </context.Provider>
   );
 }

@@ -12,14 +12,31 @@ model photos {
   v              Int      @map("__v")
   build_At       DateTime @db.Date
   channelID      String
-  createdAt      DateTime @db.Date
+  createdAt      DateTime @default(now())
   displayImage   String
   download       Int
   height         Int
   prompt         String
   size           Int
   thumbnailImage String
-  updatedAt      DateTime @db.Date
+  updatedAt      DateTime @updatedAt
   url            String
   width          Int
+}
+
+model user {
+  id        String   @id @map("_id")
+  name      String
+  email     String   @unique
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model favorites {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userID    String
+  photoID   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
