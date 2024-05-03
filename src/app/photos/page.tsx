@@ -4,26 +4,31 @@ import Gallery from "@/components/Gallery";
 import { getImages, countImages } from "@/services/imageService";
 import Link from "next/link";
 import ModalBox from "@/components/ModalBox";
-// import {
-//   updateSearch,
-//   getSearch,
-//   createSearch,
-// } from "@/services/searchService";
 
 type PageParams = {
   searchParams: { search?: string; page?: string };
 };
 
-const totalImages = cache(countImages);
+const countImagesCache = cache(countImages);
+const getImagesCache = cache(getImages);
 
 export async function generateMetadata({
   searchParams,
 }: PageParams): Promise<Metadata> {
-  const count = await totalImages(searchParams.search);
+  const count = await countImagesCache(searchParams.search);
+
+  if (count === 0)
+    return {
+      title: `No images found for ${searchParams.search ?? ""}`,
+      description: `No images found for ${searchParams.search ?? ""}`,
+    };
+
   const availableImages = count
     .toString()[0]
     .concat("0".repeat(count.toString().length - 1))
     .concat("+");
+
+  const OGImages = await getImagesCache(0, 5, searchParams.search);
 
   return {
     title: `${availableImages} ${
@@ -32,6 +37,11 @@ export async function generateMetadata({
     description: `${availableImages} ${
       searchParams.search ?? ""
     } AI generated photos available for free download.`,
+    openGraph: {
+      images: OGImages.map((image) => ({
+        url: image.thumbnailImage,
+      })),
+    },
   };
 }
 
@@ -42,9 +52,9 @@ export default async function page({ searchParams }: PageParams) {
   const search = searchParams.search?.replace("+", " ");
   const skip = (currentPage - 1) * take;
 
-  const images = await getImages(skip, take, search);
-  
-  const count = await totalImages(search);
+  const images = await getImagesCache(skip, take, search);
+
+  const count = await countImagesCache(search);
   const totalPage = Math.ceil(count / take);
 
   return (

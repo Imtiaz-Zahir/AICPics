@@ -2,6 +2,7 @@ import {cache} from "react";
 import type { Metadata } from "next";
 import { getImageByID , getALLImagesID } from "@/services/imageService";
 import ImageDetails from "@/components/ImageDetails";
+import { notFound } from "next/navigation";
 
 type PageParams = {
   params:{imageId: string;}
@@ -21,7 +22,6 @@ export async function generateMetadata({
   if (!imageData) {
     return {
       title: "Image not found",
-      description: "Image not found",
     };
   }
   return {
@@ -46,7 +46,7 @@ export default async function page({
   const imageData = await getImageDataByID(params.imageId);
 
   if (!imageData) {
-    return <div>Image not found</div>;
+    return notFound();
   }
 
   return (
