@@ -29,6 +29,11 @@ export function getImages(skip: number, take: number, search?: string) {
     skip,
     where: search ? { prompt: { contains: search } } : undefined,
     orderBy: { download: "desc" },
+    select:{
+      id: true,
+      prompt: true,
+      displayImage: true,
+    }
   });
 }
 
@@ -47,7 +52,6 @@ export function getImageByID(id: string) {
       height: true,
       width: true,
       size: true,
-      thumbnailImage: true,
     },
   });
 }

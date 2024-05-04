@@ -1,35 +1,21 @@
-// 'use server';
-// import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-// function createFavorite(data: Prisma.favoriteCreateInput) {
-//   return prisma.favorite.create({ data });
-// }
+export function setFavorite(userID: string, imageID: string) {
+  return prisma.favorites.create({ data: { userID, photoID: imageID } });
+}
 
-// function getFavorites(where?: Prisma.favoriteWhereInput) {
-//   return prisma.favorite.findMany({ where });
-// }
+export function removeFavorite(favoriteID: string) {
+  return prisma.favorites.delete({ where: { id: favoriteID } });
+}
 
-// function getFavorite(where: Prisma.favoriteWhereUniqueInput) {
-//   return prisma.favorite.findUnique({ where });
-// }
-
-// function updateFavorite(
-//   where: Prisma.favoriteWhereUniqueInput,
-//   data: Prisma.favoriteUpdateInput
-// ) {
-//   return prisma.favorite.update({ where, data });
-// }
-
-// function deleteFavorite(where: Prisma.favoriteWhereUniqueInput) {
-//   return prisma.favorite.delete({ where });
-// }
-
-// export {
-//   createFavorite,
-//   getFavorites,
-//   getFavorite,
-//   updateFavorite,
-//   deleteFavorite,
-// };
+export function getFavorites(userID: string) {
+  return prisma.favorites.findMany({
+    where: { userID },
+    select: {
+      id: true,
+      photos: { select: { prompt: true, displayImage: true, id: true } },
+    },
+  });
+}
