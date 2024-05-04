@@ -4,6 +4,7 @@ import { context } from "@/app/Context";
 import Image from "next/image";
 import Link from "next/link";
 import Favorite from "./Favorite";
+import createURL from "@/lib/createURL";
 
 export default function ImageCart({
   imageId,
@@ -21,7 +22,7 @@ export default function ImageCart({
 
   return (
     <div className="rounded-lg border overflow-hidden w-full relative group">
-      <Link href={`/photos/${imageId}`} onClick={() => setImageID(imageId)}>
+      <Link href={`/photos/${createURL(prompt,imageId)}`} onClick={() => setImageID(imageId)}>
         <Image
           className="group-hover:scale-105 transition-all duration-300"
           src={url}

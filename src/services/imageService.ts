@@ -29,17 +29,18 @@ export function getImages(skip: number, take: number, search?: string) {
     skip,
     where: search ? { prompt: { contains: search } } : undefined,
     orderBy: { download: "desc" },
-    select:{
+    select: {
       id: true,
       prompt: true,
       displayImage: true,
-    }
+    },
   });
 }
 
-export function getALLImagesID() {
+export function getALLImagesIDAndPrompt() {
   return prisma.photos.findMany({
-    select: { id: true },
+    select: { id: true, prompt: true },
+    orderBy: { download: "desc" },
   });
 }
 

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { context } from "@/app/Context";
 import ImageDetails from "./ImageDetails";
 import imageAction from "@/actions/imageAction";
+import createURL from "@/lib/createURL";
 
 type Image = {
   displayImage: string;
@@ -23,7 +24,11 @@ export default function ModalBox() {
     if (appContext?.imageID) {
       imageAction(appContext.imageID).then((data) => {
         setImageData(data);
-        window.history.pushState({}, "", "/photos/" + appContext.imageID);
+        window.history.pushState(
+          {},
+          "",
+          "/photos/" + createURL(data?.prompt ?? "", appContext.imageID ?? "")
+        );
         document.title = `Free download - ${data?.prompt
           .split(/\s+/)
           .slice(0, 6)
