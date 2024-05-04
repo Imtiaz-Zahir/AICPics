@@ -39,4 +39,7 @@ model favorites {
   photoID   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([userID, photoID])
+  @@index([userID])
 }
