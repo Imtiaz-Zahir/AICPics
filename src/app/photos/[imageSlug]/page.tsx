@@ -2,7 +2,7 @@ import { cache } from "react";
 import type { Metadata } from "next";
 import { getImageByID, getALLImagesIDAndPrompt } from "@/services/imageService";
 import ImageDetails from "@/components/ImageDetails";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import getIDFromSlag from "@/lib/getIDFromURL";
 import createURL from "@/lib/createURL";
 
@@ -22,7 +22,7 @@ export async function generateMetadata({
 }: PageParams): Promise<Metadata> {
   const imageId = getIDFromSlag(params.imageSlug);
   const imageData = await getImageDataByID(imageId);
-  if (!imageData || params.imageSlug.length == imageId.length) {
+  if (!imageData) {
     return {
       title: "Image not found",
     };
@@ -47,8 +47,12 @@ export default async function page({ params }: PageParams) {
   const imageId = getIDFromSlag(params.imageSlug);
   const imageData = await getImageDataByID(imageId);
 
-  if (!imageData || params.imageSlug.length == imageId.length) {
+  if (!imageData) {
     return notFound();
+  }
+
+  if(params.imageSlug.length == imageId.length){
+    redirect(`/photos/${createURL(imageData.prompt, imageId)}`);
   }
 
   return (
