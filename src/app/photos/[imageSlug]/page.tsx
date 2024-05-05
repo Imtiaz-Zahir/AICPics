@@ -2,7 +2,7 @@ import { cache } from "react";
 import type { Metadata } from "next";
 import { getImageByID, getALLImagesIDAndPrompt } from "@/services/imageService";
 import ImageDetails from "@/components/ImageDetails";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import getIDFromSlag from "@/lib/getIDFromURL";
 import createURL from "@/lib/createURL";
 
@@ -52,7 +52,7 @@ export default async function page({ params }: PageParams) {
   }
 
   if(params.imageSlug.length == imageId.length){
-    redirect(`/photos/${createURL(imageData.prompt, imageId)}`);
+    permanentRedirect(`/photos/${createURL(imageData.prompt, imageId)}`);
   }
 
   return (
