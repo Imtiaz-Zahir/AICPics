@@ -22,7 +22,7 @@ export async function generateMetadata({
 }: PageParams): Promise<Metadata> {
   const imageId = getIDFromSlag(params.imageSlug);
   const imageData = await getImageDataByID(imageId);
-  if (!imageData) {
+  if (!imageData || params.imageSlug.length == imageId.length) {
     return {
       title: "Image not found",
     };
@@ -47,7 +47,7 @@ export default async function page({ params }: PageParams) {
   const imageId = getIDFromSlag(params.imageSlug);
   const imageData = await getImageDataByID(imageId);
 
-  if (!imageData) {
+  if (!imageData || params.imageSlug.length == imageId.length) {
     return notFound();
   }
 
