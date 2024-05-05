@@ -11,6 +11,7 @@ type Image = {
   height: number;
   width: number;
   size: number;
+  download: number;
 };
 
 export default function ModalBox() {
@@ -69,7 +70,7 @@ export default function ModalBox() {
             />
           </svg>
         </button>
-        <div className="w-[95%] mx-auto flex flex-col lg:flex-row gap-10">
+        <div className="w-[95%] mx-auto">
           <ImageDetails imageData={{ ...imageData, id: imageID }} />
         </div>
       </div>

@@ -53,6 +53,7 @@ export function getImageByID(id: string) {
       height: true,
       width: true,
       size: true,
+      download: true,
     },
   });
 }

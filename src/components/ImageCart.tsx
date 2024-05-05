@@ -26,8 +26,8 @@ export default function ImageCart({
         <Image
           className="group-hover:scale-105 transition-all duration-300"
           src={url}
-          height={450}
-          width={450}
+          height={640}
+          width={640}
           loading="lazy"
           alt={prompt}
           unoptimized={true}

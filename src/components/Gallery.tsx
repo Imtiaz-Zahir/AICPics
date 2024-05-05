@@ -1,5 +1,5 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useRef } from "react";
 import ImageCart from "./ImageCart";
 
 export default function Gallery({
@@ -8,8 +8,9 @@ export default function Gallery({
   images: { id: string; prompt: string; displayImage: string }[];
 }) {
   const [width, setWidth] = useState<number>(1279);
+  const galleryComponent = useRef<HTMLDivElement>(null);
   useEffect(() => {
-      setWidth(window.innerWidth);
+      setWidth(galleryComponent.current?.offsetWidth || 1279);
   }, []);
 
   const imagesArray = (() => {
@@ -32,6 +33,7 @@ export default function Gallery({
       style={{
         gridTemplateColumns: `repeat(${imagesArray.length}, minmax(0, 1fr))`,
       }}
+      ref={galleryComponent}
     >
       {imagesArray.map((photos, index) => (
         <div key={index} className="flex flex-col gap-1">
