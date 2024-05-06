@@ -34,7 +34,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="flex items-center justify-between gap-2 py-3 bg-white fixed w-full px-2 sm:px-5 z-10">
+    <nav className="flex items-center justify-between gap-2 py-3 bg-white fixed w-full max-w-screen-2xl px-2 sm:px-5 z-10">
       <Link href="/">
         <Image
           className="sm:hidden"

@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { context } from "@/app/Context";
 import ImageDetails from "./ImageDetails";
-import imageAction from "@/actions/imageAction";
+import { getImageDataByID } from "@/actions/imageAction";
 import createURL from "@/lib/createURL";
 
 type Image = {
@@ -22,11 +22,17 @@ export default function ModalBox() {
   const setImageID = appContext?.setImageID;
 
   useEffect(() => {
+    function closeModelOnBack() {
+      if (!setImageID) return console.error("setImageID is not defined");
+      setImageID(null);
+      history.replaceState({}, "", window.location.pathname);
+    }
+
     if (appContext?.imageID) {
-      imageAction(appContext.imageID).then((data) => {
+      getImageDataByID(appContext.imageID).then((data) => {
         setImageData(data);
         window.history.pushState(
-          {},
+          { modalOpen: true },
           "",
           "/photos/" + createURL(data?.prompt ?? "", appContext.imageID ?? "")
         );
@@ -37,11 +43,16 @@ export default function ModalBox() {
       });
 
       document.body.style.overflow = "hidden";
+
+      window.addEventListener("popstate", closeModelOnBack);
+
+      // Cleanup function to remove event listener when component unmounts
+      return () => window.removeEventListener("popstate", closeModelOnBack);
     } else {
       document.body.style.overflow = "auto";
       setImageData(null);
     }
-  }, [appContext?.imageID]);
+  }, [appContext?.imageID, setImageID]);
 
   if (!imageID || !setImageID || !imageData) return null;
 

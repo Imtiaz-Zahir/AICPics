@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className + " flex flex-col gap-y-20"}>
+      <body className={roboto.className + " flex flex-col gap-y-20 max-w-screen-2xl mx-auto"}>
         <Context>
           <Nav />
           {children}
