@@ -1,6 +1,10 @@
 import { cache } from "react";
 import type { Metadata } from "next";
-import { getImageByID, getALLImagesIDAndPrompt,getImages } from "@/services/imageService";
+import {
+  getImageByID,
+  getALLImagesIDAndPrompt,
+  getImages,
+} from "@/services/imageService";
 import ImageDetails from "@/components/ImageDetails";
 import { notFound, permanentRedirect } from "next/navigation";
 import getIDFromSlag from "@/lib/getIDFromURL";
@@ -52,7 +56,7 @@ export default async function page({ params }: PageParams) {
     return notFound();
   }
 
-  if(params.imageSlug.length == imageId.length){
+  if (params.imageSlug.length == imageId.length) {
     permanentRedirect(`/photos/${createURL(imageData.prompt, imageId)}`);
   }
 
@@ -60,7 +64,13 @@ export default async function page({ params }: PageParams) {
     <section className="w-[95%] mx-auto mt-20">
       <ImageDetails imageData={{ ...imageData, id: imageId }} />
       <h3 className="my-5 text-2xl font-medium">You might also like</h3>
-      <Gallery images={await getImages(0,30)} />
+      <Gallery
+        images={await getImages(
+          0,
+          30,
+          imageData.prompt.split(/\s+/).slice(0, 3).join(" ")
+        )}
+      />
     </section>
   );
-}
+} 
