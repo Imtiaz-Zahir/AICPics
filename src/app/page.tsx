@@ -53,7 +53,6 @@ export default async function page() {
                   key={index}
                   href={`/photos?search=${alt
                     .split(/\s+/)
-                    .slice(0, 3)
                     .join("+")
                     .toLowerCase()}`}
                 >

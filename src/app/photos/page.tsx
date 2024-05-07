@@ -22,10 +22,10 @@ export async function generateMetadata({
       description: `No images found for ${searchParams.search ?? ""}`,
     };
 
-  const availableImages = count
+  const availableImages: string = count
     .toString()
     .slice(0, 2)
-    .concat("0".repeat(count.toString().length - 2))
+    .concat("0".repeat(count.toString().length - 2<0?0:count.toString().length - 2))
     .concat("+");
 
   const OGImages = await getImagesCache(0, 5, searchParams.search);
