@@ -15,7 +15,7 @@ export default function Search({ hero }: { hero?: boolean }) {
     if (search.length === 0) {
       router.push("/photos");
     } else {
-      router.push(`/photos?search=${search.replace(/\s/g, "+")}`);
+      router.push(`/photos?search=${search.replace(/\s/g, "+").toLowerCase()}`);
     }
   }
 

@@ -27,6 +27,9 @@ export default function Footer() {
           <li>
             <Link href={"/photos"}>Photos</Link>
           </li>
+          <li>
+            <Link href={"/favorites"}>favorites</Link>
+          </li>
           {/* <li>
             <a href="#">About</a>
           </li>

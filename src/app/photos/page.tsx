@@ -21,12 +21,12 @@ export async function generateMetadata({
       title: `No images found for ${searchParams.search ?? ""}`,
       description: `No images found for ${searchParams.search ?? ""}`,
     };
-    
-  const numberString = count.toString();
-  const availableImages =
-    numberString.length > 3
-      ? numberString.slice(0, -3) + "000".concat("+")
-      : numberString[0].concat("0".repeat(numberString.length - 1)).concat("+");
+
+  const availableImages = count
+    .toString()
+    .slice(0, 2)
+    .concat("0".repeat(count.toString().length - 2))
+    .concat("+");
 
   const OGImages = await getImagesCache(0, 5, searchParams.search);
 

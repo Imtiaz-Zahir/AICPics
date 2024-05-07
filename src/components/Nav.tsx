@@ -40,23 +40,23 @@ export default function Nav() {
           className="sm:hidden"
           src="/logo-small.png"
           alt="Synthetic Gallery"
-          height={50}
-          width={50}
+          height={46}
+          width={46}
           priority={true}
         />
         <Image
           className="hidden sm:block"
           src="/logo.png"
           alt="Synthetic Gallery"
-          height={50}
-          width={150}
+          height={40}
+          width={200}
           priority={true}
         />
       </Link>
       <Search />
       <svg
         onClick={() => setMenuOpen((prev) => !prev)}
-        className="w-12 z-20 md:hidden"
+        className="w-12 z-20 lg:hidden"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -70,12 +70,12 @@ export default function Nav() {
         ></path>
       </svg>
       <div
-        className={`absolute sm:static bg-white sm:bg-transparent w-full sm:w-auto h-screen sm:h-auto -z-10 ${
+        className={`absolute lg:static bg-white lg:bg-transparent w-full lg:w-auto h-screen lg:h-auto -z-10 ${
           menuOpen ? "left-0" : "left-full"
-        } top-16 p-8 sm:p-0 flex flex-col sm:flex-row items-center gap-7 transition-all duration-300`}
+        } top-16 p-8 lg:p-0 flex flex-col lg:flex-row items-center gap-7 transition-all duration-300`}
         onClick={() => setMenuOpen(false)}
       >
-        <ul className="flex flex-col sm:flex-row justify-center items-center gap-5 text-xl font-semibold">
+        <ul className="flex flex-col sm:flex-row justify-center items-center gap-5 text-lg font-medium">
           <li>
             <Link href={"/photos"}>Photos</Link>
           </li>

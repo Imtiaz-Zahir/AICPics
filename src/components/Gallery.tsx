@@ -15,15 +15,15 @@ export default function Gallery({
 
   const imagesArray = (() => {
     if (width > 1279) {
-      return strackerImage(images, 5);
+      return separateImage(images, 5);
     } else if (width > 1023) {
-      return strackerImage(images, 4);
+      return separateImage(images, 4);
     } else if (width > 767) {
-      return strackerImage(images, 3);
-    } else if (width > 450) {
-      return strackerImage(images, 2);
+      return separateImage(images, 3);
+    } else if (width > 400) {
+      return separateImage(images, 2);
     } else {
-      return strackerImage(images, 1);
+      return separateImage(images, 1);
     }
   })();
 
@@ -51,7 +51,7 @@ export default function Gallery({
   );
 }
 
-function strackerImage(
+function separateImage(
   images: { id: string; prompt: string; displayImage: string }[],
   columns: number
 ) {

@@ -14,7 +14,7 @@ export default async function page() {
         </h1>
         <Search hero={true} />
         <Image
-          src="/creations/abstract-wave-pattern-vibrant-colors-modern-decoration-generated-by-artificial-intelligence.jpg"
+          src="/hero.jpg"
           style={{
             position: "absolute",
             zIndex: "-1",
@@ -33,7 +33,7 @@ export default async function page() {
         </div>
         <div className="flex flex-col justify-center items-center">
           <h4 className="text-5xl text-red-600 font-bold">150+</h4>
-          <p className="text-xl font-semibold my-2">Remastered User</p>
+          <p className="text-xl font-semibold my-2">Registered User</p>
         </div>
         <div className="flex flex-col justify-center items-center">
           <h4 className="text-5xl text-red-600 font-bold">1000+</h4>
@@ -45,16 +45,23 @@ export default async function page() {
           The Beauty of AI-Generated Images
         </h1>
         <p className="text-2xl my-5">Here are Some Stunning AI Creations</p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 mb-10">
           {creations.map((c, index) => (
-            <div key={index} className="w-full flex flex-col gap-1 mb-10">
+            <div key={index} className="w-full flex flex-col gap-1">
               {c.map(({ alt, url }, index) => (
-                <Link key={index} href={`/photos/${alt.replace(/\s/g, "+")}`}>
+                <Link
+                  key={index}
+                  href={`/photos?search=${alt
+                    .split(/\s+/)
+                    .slice(0, 3)
+                    .join("+")
+                    .toLowerCase()}`}
+                >
                   <Image
-                    className="rounded-lg"
-                    src={"/creations/" + url}
-                    width={370}
-                    height={370}
+                    className="rounded-lg mx-auto"
+                    src={url}
+                    width={400}
+                    height={400}
                     alt={alt}
                   />
                 </Link>
