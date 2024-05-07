@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.pop-down{
-    background: linear-gradient(0deg, rgba(0,0,0,0.73) 0%, rgba(0,0,0,1) 100%);
-    box-shadow: 0px 0px 20px 20px #000000bf;
-}
+/* .blear-bg{
+    background: linear-gradient(46deg, #3a4244 0%, #2f3537 100%);
+    border-radius: 100%;
+    box-shadow: 5px -5px 20px 20px #00000087;
+} */
 
 .scroll {
     box-shadow: 0 1rem 2rem #0003

@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Feedback from "./Feedback";
 
 export default function Footer() {
   return (
@@ -38,25 +39,7 @@ export default function Footer() {
           </li> */}
         </ul>
       </div>
-      <div>
-        <h3 className="text-lg font-semibold">Contact Us</h3>
-        <form className="flex flex-col gap-3 mt-5 text-black">
-          <input
-            type="text"
-            placeholder="Email"
-            className="p-2 w-full rounded-md focus:outline-none"
-          />
-          <input
-            type="text"
-            placeholder="Message"
-            className="p-2 w-full rounded-md focus:outline-none"
-          />
-          {/* <button
-            type="submit"
-            className="bg-gray-600 text-white p-2 rounded-md w-full"
-          >Submit</button> */}
-        </form>
-      </div>
+      <Feedback />
     </footer>
   );
 }

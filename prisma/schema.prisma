@@ -46,3 +46,9 @@ model favorites {
   @@unique([userID, photoID])
   @@index([userID])
 }
+
+model feedbacks{
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  message   String
+}
