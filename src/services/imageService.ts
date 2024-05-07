@@ -6,6 +6,9 @@ type Image = {
   _id: string;
   prompt: string;
   displayImage: string;
+  height: number;
+  width: number;
+  size: number;
 };
 
 export async function getImages(skip: number, take: number, search?: string) {
@@ -28,6 +31,9 @@ export async function getImages(skip: number, take: number, search?: string) {
             _id: 1,
             prompt: 1,
             displayImage: 1,
+            height: 1,
+            width: 1,
+            size: 1,
             download: 1,
             score: { $meta: "searchScore" },
           },
@@ -50,6 +56,9 @@ export async function getImages(skip: number, take: number, search?: string) {
         id: image._id,
         prompt: image.prompt,
         displayImage: image.displayImage,
+        height: image.height,
+        width: image.width,
+        size: image.size,
       }));
     }
   }
@@ -63,6 +72,9 @@ export async function getImages(skip: number, take: number, search?: string) {
       id: true,
       prompt: true,
       displayImage: true,
+      height: true,
+      width: true,
+      size: true,
     },
   });
 }

@@ -63,11 +63,11 @@ export default async function page({ params }: PageParams) {
   return (
     <section className="w-[95%] mx-auto mt-20">
       <ImageDetails imageData={{ ...imageData, id: imageId }} />
-      <h3 className="my-5 text-2xl font-medium">You might also like</h3>
+      <h3 className="mt-10 mb-5 text-2xl font-medium">You might also like</h3>
       <Gallery
         images={await getImages(
           0,
-          30,
+          10,
           imageData.prompt.split(/\s+/).slice(0, 3).join(" ")
         )}
       />

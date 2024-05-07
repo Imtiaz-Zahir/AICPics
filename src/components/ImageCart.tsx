@@ -5,36 +5,38 @@ import Image from "next/image";
 import Link from "next/link";
 import Favorite from "./Favorite";
 import createURL from "@/lib/createURL";
+import type { ImageData } from "@/types/imageTypes";
 
 export default function ImageCart({
-  imageId,
-  url,
-  prompt,
+  imageData,
 }: {
-  imageId: string;
-  url: string;
-  prompt: string;
+  imageData: ImageData
 }) {
   const appContext = useContext(context);
-  const setImageID = appContext?.setImageID;
+  const setImageData = appContext?.setImageData;
 
-  if (!setImageID) return null;
+  if (!setImageData) return null;
 
   return (
     <div className="rounded-lg border overflow-hidden w-full relative group">
-      <Link href={`/photos/${createURL(prompt,imageId)}`} onClick={() => setImageID(imageId)}>
+      <Link
+        href={`/photos/${createURL(imageData.prompt, imageData.id)}`}
+        onClick={() => setImageData(imageData)}
+      >
         <Image
           className="group-hover:scale-105 transition-all duration-300"
-          src={url}
+          src={imageData.displayImage}
           height={640}
           width={640}
           loading="lazy"
-          alt={prompt}
+          alt={imageData.prompt}
           unoptimized={true}
         />
       </Link>
-      <div className="absolute top-0 sm:-top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down">
-        <Favorite imageData={{ id: imageId, displayImage: url, prompt }} />
+      {/* <div className="absolute top-0 sm:-top-20 group-hover:top-0 transition-all duration-300 flex items-center justify-between w-full px-5 py-2 pop-down"> */}
+        <Favorite
+          imageData={imageData}
+        />
 
         {/* <Link href={`/api/image?download=${url}`} download={true}>
           <svg
@@ -70,7 +72,7 @@ export default function ImageCart({
             </g>
           </svg>
         </Link> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 }

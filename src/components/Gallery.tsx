@@ -1,16 +1,14 @@
 "use client";
-import { useState,useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import ImageCart from "./ImageCart";
 
-export default function Gallery({
-  images,
-}: {
-  images: { id: string; prompt: string; displayImage: string }[];
-}) {
+import type { ImageData } from "@/types/imageTypes";
+
+export default function Gallery({ images }: { images: ImageData[] }) {
   const [width, setWidth] = useState<number>(1279);
   const galleryComponent = useRef<HTMLDivElement>(null);
   useEffect(() => {
-      setWidth(galleryComponent.current?.offsetWidth || 1279);
+    setWidth(galleryComponent.current?.offsetWidth || 1279);
   }, []);
 
   const imagesArray = (() => {
@@ -38,12 +36,7 @@ export default function Gallery({
       {imagesArray.map((photos, index) => (
         <div key={index} className="flex flex-col gap-1">
           {photos.map((image) => (
-            <ImageCart
-              key={image.id}
-              imageId={image.id}
-              url={image.displayImage}
-              prompt={image.prompt}
-            />
+            <ImageCart key={image.id} imageData={image} />
           ))}
         </div>
       ))}
@@ -51,17 +44,12 @@ export default function Gallery({
   );
 }
 
-function separateImage(
-  images: { id: string; prompt: string; displayImage: string }[],
-  columns: number
-) {
+function separateImage(images: ImageData[], columns: number) {
   const array = [];
   for (let index = 0; index < columns; index++) {
     array.push([]);
   }
-  return images.reduce<
-    { id: string; prompt: string; displayImage: string }[][]
-  >((acc, curr, index) => {
+  return images.reduce<ImageData[][]>((acc, curr, index) => {
     acc[index % acc.length].push(curr);
     return acc;
   }, array);

@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Prompt from "@/components/Prompt";
+import Favorite from "@/components/Favorite";
 
 type Image = {
   id: string;
@@ -9,7 +10,6 @@ type Image = {
   height: number;
   width: number;
   size: number;
-  download: number;
 };
 
 export default function ImageDetailsContainer({
@@ -20,7 +20,7 @@ export default function ImageDetailsContainer({
   return (
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="lg:w-3/4">
-          <div className="flex justify-center w-full border rounded-lg overflow-hidden">
+          <div className="flex justify-center w-full border rounded-lg overflow-hidden relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               style={{ maxHeight: "80vh" }}
@@ -28,6 +28,7 @@ export default function ImageDetailsContainer({
               // className="max-w-full max-h-full"
               alt={imageData.prompt}
             />
+            <Favorite imageData={imageData} />
           </div>
 
           <Prompt prompt={imageData.prompt} />
@@ -47,9 +48,9 @@ export default function ImageDetailsContainer({
                 {(imageData.size / (1024 * 1024)).toFixed(2)} MB
               </span>
             </li>
-            <li>
+            {/* <li>
               Downloads : <span className="font-medium">{imageData.download}</span>
-            </li>
+            </li> */}
           </ul>
           <a
             href={`/download?imageID=${imageData.id}`}
