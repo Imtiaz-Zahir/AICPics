@@ -3,7 +3,22 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export function setFavorite(email: string, imageID: string) {
-  return prisma.favorites.create({ data: { email, photoID: imageID } });
+  return prisma.favorites.create({
+    data: { email, photoID: imageID },
+    include: {
+      photos: {
+        select: {
+          prompt: true,
+          displayImage: true,
+          id: true,
+          thumbnailImage: true,
+          height: true,
+          width: true,
+          size: true,
+        },
+      },
+    },
+  });
 }
 
 export function removeFavorite(favoriteID: string) {
@@ -15,7 +30,17 @@ export function getFavorites(email: string) {
     where: { email },
     select: {
       id: true,
-      photos: { select: { prompt: true, displayImage: true, id: true } },
+      photos: {
+        select: {
+          prompt: true,
+          displayImage: true,
+          id: true,
+          thumbnailImage: true,
+          height: true,
+          width: true,
+          size: true,
+        },
+      },
     },
   });
 }
