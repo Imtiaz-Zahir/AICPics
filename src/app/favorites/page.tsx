@@ -17,7 +17,7 @@ export default function Page() {
   const favorites = appContext.favorites;
 
   return (
-    <section className="w-[95vw] mx-auto mt-20">
+    <section className="w-[95%] mx-auto mt-20">
       <h1 className="text-3xl sm:text-7xl font-bold text-center mb-3">
         Your Favorites Images
       </h1>

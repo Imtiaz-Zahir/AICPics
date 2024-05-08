@@ -58,7 +58,7 @@ export default async function page({ searchParams }: PageParams) {
   const totalPage = Math.ceil(count / take);
 
   return (
-    <section className="w-[95vw] mx-auto mt-20">
+    <section className="w-[95%] mx-auto mt-20">
       <h2 className="text-3xl sm:text-7xl font-bold text-center mb-3">
         Explore Gallery <br />
         Find Your Imagination
