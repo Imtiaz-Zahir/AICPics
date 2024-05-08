@@ -14,10 +14,9 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost:3000"),
   title: {
-    default: "AIGPic - Free AI-Generated Photos",
-    template: "%s - AIGPic",
+    default: "AICPics - Free AI Created Photos",
+    template: "%s - AICPics",
   },
   description:
     "Discover a vast library of over 20 million stunning, AI-generated photos ready for free download on our website. From breathtaking landscapes to captivating portraits, explore endless possibilities for your creative projects with our diverse collection.",

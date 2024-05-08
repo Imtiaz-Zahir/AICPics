@@ -1,21 +1,12 @@
 import React from "react";
-import Image from "next/image";
 import Prompt from "@/components/Prompt";
 import Favorite from "@/components/Favorite";
-
-type Image = {
-  id: string;
-  displayImage: string;
-  prompt: string;
-  height: number;
-  width: number;
-  size: number;
-};
+import type { ImageData } from "@/types/imageTypes";
 
 export default function ImageDetailsContainer({
   imageData,
 }: {
-  imageData: Image;
+  imageData: ImageData;
 }) {
   return (
       <div className="flex flex-col lg:flex-row gap-10">
