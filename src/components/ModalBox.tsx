@@ -41,7 +41,7 @@ export default function ModalBox() {
   if (!imageData || !setImageData) return null;
 
   return (
-    <section className="fixed max-w-screen-2xl w-full h-screen bg-[#00000080] flex items-center justify-center z-20">
+    <section className="fixed w-full h-screen bg-[#00000080] flex items-center justify-center z-20">
       <div className="bg-white py-10 rounded-lg w-[90%] h-[90vh] overflow-y-scroll">
         <button
           onClick={() => {

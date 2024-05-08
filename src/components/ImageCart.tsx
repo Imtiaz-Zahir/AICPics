@@ -24,7 +24,7 @@ export default function ImageCart({
         onClick={() => setImageData(imageData)}
       >
         <Image
-          className="group-hover:scale-105 transition-all duration-300"
+          className="group-hover:scale-105 transition-all duration-300 mx-auto"
           src={imageData.displayImage}
           height={640}
           width={640}

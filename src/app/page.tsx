@@ -7,7 +7,7 @@ import Link from "next/link";
 export default async function page() {
   return (
     <>
-      <section className="border rounded-xl flex flex-col justify-center items-center gap-2 lg:gap-5 w-[95%] max-w-screen-2xl mx-auto mt-20 py-20 lg:py-44 relative overflow-hidden">
+      <section className="border rounded-xl flex flex-col justify-center items-center gap-2 lg:gap-5 w-[95%] mx-auto mt-20 py-20 lg:py-44 relative overflow-hidden">
         <h1 className="text-2xl sm:text-7xl font-bold text-center text-white">
           Search Throw <span className="text-red-600">20M+</span>
           <br /> AI Generated Photos
@@ -59,9 +59,10 @@ export default async function page() {
                   <Image
                     className="rounded-lg mx-auto"
                     src={url}
-                    width={400}
-                    height={400}
+                    width={640}
+                    height={640}
                     alt={alt}
+                    unoptimized={true}
                   />
                 </Link>
               ))}
