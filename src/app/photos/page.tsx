@@ -28,7 +28,7 @@ export async function generateMetadata({
     .concat("0".repeat(count.toString().length - 2<0?0:count.toString().length - 2))
     .concat("+");
 
-  const OGImages = await getImagesCache(0, 5, searchParams.search);
+  const OGImages = await getImagesCache(0, 4, searchParams.search);
 
   return {
     title: `${availableImages} ${
@@ -39,7 +39,7 @@ export async function generateMetadata({
     } AI generated photos available for free download.`,
     openGraph: {
       images: OGImages.map((image) => ({
-        url: image.displayImage,
+        url: image.thumbnailImage,
       })),
     },
   };

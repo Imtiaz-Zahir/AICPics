@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .blear-bg{
-    background: linear-gradient(46deg, #3a4244 0%, #2f3537 100%);
+.blear-bg{
+    background: #00000087;
     border-radius: 100%;
-    box-shadow: 5px -5px 20px 20px #00000087;
-} */
+    box-shadow: 0px 0px 20px 20px #00000087;
+}
 
 .scroll {
     box-shadow: 0 1rem 2rem #0003

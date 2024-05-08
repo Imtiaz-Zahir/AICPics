@@ -14,6 +14,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost:3000"),
   title: {
     default: "AIGPic - Free AI-Generated Photos",
     template: "%s - AIGPic",

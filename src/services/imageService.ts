@@ -9,6 +9,7 @@ type Image = {
   height: number;
   width: number;
   size: number;
+  thumbnailImage: string;
 };
 
 export async function getImages(skip: number, take: number, search?: string) {
@@ -35,6 +36,7 @@ export async function getImages(skip: number, take: number, search?: string) {
             width: 1,
             size: 1,
             download: 1,
+            thumbnailImage: 1,
             score: { $meta: "searchScore" },
           },
         },
@@ -59,6 +61,7 @@ export async function getImages(skip: number, take: number, search?: string) {
         height: image.height,
         width: image.width,
         size: image.size,
+        thumbnailImage: image.thumbnailImage,
       }));
     }
   }
@@ -75,6 +78,7 @@ export async function getImages(skip: number, take: number, search?: string) {
       height: true,
       width: true,
       size: true,
+      thumbnailImage: true,
     },
   });
 }
@@ -91,6 +95,7 @@ export function getImageByID(id: string) {
     where: { id },
     select: {
       displayImage: true,
+      thumbnailImage: true,
       prompt: true,
       height: true,
       width: true,
