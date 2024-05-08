@@ -5,9 +5,9 @@ import {
   getFavorites,
 } from "@/services/favoriteService";
 
-export async function addToFavoriteList(imageId: string, userId: string) {
+export async function addToFavoriteList(email: string, imageId: string) {
   try {
-    return await setFavorite(userId, imageId);
+    return await setFavorite(email, imageId);
   } catch (error) {
     console.error(error);
     return null;
@@ -23,9 +23,9 @@ export async function removeFromFavoriteList(favoriteID: string) {
   }
 }
 
-export async function getFavoriteList(userId: string) {
+export async function getFavoriteList(email: string) {
   try {
-    return await getFavorites(userId);
+    return await getFavorites(email);
   } catch (error) {
     console.error(error);
     return [];

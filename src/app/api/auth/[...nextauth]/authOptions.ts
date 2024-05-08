@@ -1,6 +1,10 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { createUser, getUsersByID } from "@/services/userService";
+import {
+  createUser,
+  getUsersByEmail,
+  storeLastVisit,
+} from "@/services/userService";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -12,15 +16,15 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }) {
       try {
-        const doseUserExists = await getUsersByID(user.id);
+        if (!user.name || !user.email || !user.image) {
+          console.log("Invalid user data", user);
+          throw new Error("Invalid user data");
+        }
+
+        const doseUserExists = await getUsersByEmail(user.email);
 
         if (!doseUserExists) {
-          await createUser(
-            user.id,
-            user.name ?? "USER",
-            user?.email ?? "not found",
-            user?.image ?? "/user.png"
-          );
+          await createUser(user.name, user.email, user.image);
         }
         return true;
       } catch (error) {
@@ -28,11 +32,8 @@ const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.sub;
-      }
-
+    session({ session }) {
+      if (session.user?.email) storeLastVisit(session.user.email);
       return session;
     },
   },
