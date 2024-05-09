@@ -13,7 +13,10 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
+const hostname = process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase:new URL(`https://${hostname}`),
   title: {
     default: "AICPics - Free AI Created Photos",
     template: "%s - AICPics",

@@ -62,7 +62,6 @@ export default async function page() {
                     width={640}
                     height={640}
                     alt={alt}
-                    unoptimized={true}
                   />
                 </Link>
               ))}
