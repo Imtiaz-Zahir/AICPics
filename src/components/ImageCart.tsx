@@ -25,7 +25,7 @@ export default function ImageCart({
       >
         <Image
           className="group-hover:scale-105 transition-all duration-300 mx-auto"
-          src={imageData.displayImage}
+          src={imageData.thumbnailImage}
           height={640}
           width={640}
           loading="lazy"
