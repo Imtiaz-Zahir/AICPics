@@ -39,7 +39,7 @@ export async function generateMetadata({
     } AI generated photos available for free download.`,
     openGraph: {
       images: OGImages.map((image) => ({
-        url: image.thumbnailImage,
+        url: `https://d3mgzxr1ote33t.cloudfront.net/${image.url}`,
       })),
     },
   };

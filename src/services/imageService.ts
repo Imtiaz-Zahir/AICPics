@@ -5,11 +5,10 @@ const prisma = new PrismaClient();
 type Image = {
   _id: string;
   prompt: string;
-  displayImage: string;
   height: number;
   width: number;
   size: number;
-  thumbnailImage: string;
+  url: string;
 };
 
 export async function getImages(skip: number, take: number, search?: string) {
@@ -31,12 +30,11 @@ export async function getImages(skip: number, take: number, search?: string) {
           $project: {
             _id: 1,
             prompt: 1,
-            displayImage: 1,
+            url: 1,
             height: 1,
             width: 1,
             size: 1,
             download: 1,
-            thumbnailImage: 1,
             score: { $meta: "searchScore" },
           },
         },
@@ -57,11 +55,10 @@ export async function getImages(skip: number, take: number, search?: string) {
       return images.map((image) => ({
         id: image._id,
         prompt: image.prompt,
-        displayImage: image.displayImage,
+        url: image.url,
         height: image.height,
         width: image.width,
         size: image.size,
-        thumbnailImage: image.thumbnailImage,
       }));
     }
   }
@@ -74,11 +71,10 @@ export async function getImages(skip: number, take: number, search?: string) {
     select: {
       id: true,
       prompt: true,
-      displayImage: true,
+      url: true,
       height: true,
       width: true,
       size: true,
-      thumbnailImage: true,
     },
   });
 }
@@ -94,8 +90,7 @@ export function getImageByID(id: string) {
   return prisma.photos.findUnique({
     where: { id },
     select: {
-      displayImage: true,
-      thumbnailImage: true,
+      url: true,
       prompt: true,
       height: true,
       width: true,

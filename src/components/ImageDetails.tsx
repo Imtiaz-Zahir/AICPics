@@ -15,7 +15,7 @@ export default function ImageDetailsContainer({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               style={{ maxHeight: "80vh" }}
-              src={imageData.displayImage}
+              src={imageData.url}
               // className="max-w-full max-h-full"
               alt={imageData.prompt}
             />
