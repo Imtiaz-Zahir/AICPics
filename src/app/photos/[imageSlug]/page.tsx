@@ -41,7 +41,7 @@ export async function generateMetadata({
     openGraph: {
       images: [
         {
-          url: `https://d3mgzxr1ote33t.cloudfront.net/${imageData.url}`
+          url: imageData.url
         },
       ],
     },
