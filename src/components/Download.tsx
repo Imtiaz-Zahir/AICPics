@@ -10,17 +10,17 @@ export default function Download({
 }) {
   const [loading, setLoading] = React.useState(false);
   function handelDownload() {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 5000);
 
-    const link = document.createElement("a");
-    link.href = `/api/download?imageID=${id}`;
-    link.download = `${prompt.split(/\s+/).slice(0, 10).join(" ")}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // const link = document.createElement("a");
+    // link.href = `/api/download?imageID=${id}`;
+    // link.download = `${prompt.split(/\s+/).slice(0, 10).join(" ")}.png`;
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
   }
 
   return (
