@@ -1,4 +1,4 @@
-import { cache } from "react";
+import React from "react";
 import type { Metadata } from "next";
 import {
   getImageByID,
@@ -6,27 +6,25 @@ import {
   getImages,
 } from "@/services/imageService";
 import ImageDetails from "@/components/ImageDetails";
-import { notFound, permanentRedirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import getIDFromSlag from "@/lib/getIDFromURL";
-import createURL from "@/lib/createURL";
 import Gallery from "@/components/Gallery";
+import { slugGenerator, imageURLGenerator } from "@/lib/urlGenerator";
 
 type PageParams = {
   params: { imageSlug: string };
 };
 
-const getImageDataByID = cache(getImageByID);
-
 export async function generateStaticParams() {
   const images = await getALLImagesIDAndPrompt();
-  return images.map(({ id, prompt }) => createURL(prompt, id));
+  return images.map(({ id, prompt }) => slugGenerator(prompt, id));
 }
 
 export async function generateMetadata({
   params,
 }: PageParams): Promise<Metadata> {
   const imageId = getIDFromSlag(params.imageSlug);
-  const imageData = await getImageDataByID(imageId);
+  const imageData = await getImageByID(imageId);
   if (!imageData) {
     return {
       title: "Image not found",
@@ -41,7 +39,11 @@ export async function generateMetadata({
     openGraph: {
       images: [
         {
-          url: imageData.url
+          url: imageURLGenerator({
+            id: imageData.id,
+            prompt: imageData.prompt,
+            key: imageData.key,
+          }),
         },
       ],
     },
@@ -49,15 +51,17 @@ export async function generateMetadata({
 }
 
 export default async function page({ params }: PageParams) {
-  const imageId = getIDFromSlag(params.imageSlug);
-  const imageData = await getImageDataByID(imageId);
-
-  if (!imageData) {
+  if(!params.imageSlug.endsWith(".html")){
     return notFound();
   }
+  const imageId = getIDFromSlag(params.imageSlug);
+  const imageData = await getImageByID(imageId);
 
-  if (params.imageSlug.length == imageId.length) {
-    permanentRedirect(`/photos/${createURL(imageData.prompt, imageId)}`);
+  if (
+    !imageData ||
+    slugGenerator(imageData.prompt, imageId) !== params.imageSlug
+  ) {
+    return notFound();
   }
 
   return (
@@ -73,4 +77,4 @@ export default async function page({ params }: PageParams) {
       />
     </section>
   );
-} 
+}

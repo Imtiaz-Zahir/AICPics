@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getALLImagesIDAndPrompt } from "@/services/imageService";
-import createURL from "@/lib/createURL";
+import { slugGenerator } from "@/lib/urlGenerator";
 
 const hostname = process.env.VERCEL_PROJECT_PRODUCTION_URL || "localhost:3000";
 
@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const photosLinks = images.reduce<MetadataRoute.Sitemap>((acc, image) => {
     acc.push({
-      url: `https://${hostname}/photos/${createURL(image.prompt, image.id)}`,
+      url: `https://${hostname}/photos/${slugGenerator(image.prompt, image.id)}`,
     });
     return acc;
   }, []);

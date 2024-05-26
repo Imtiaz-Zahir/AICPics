@@ -1,45 +1,52 @@
-import { cache } from "react";
+import React from "react";
 import type { Metadata } from "next";
 import Gallery from "@/components/Gallery";
 import { getImages, countImages } from "@/services/imageService";
 import Link from "next/link";
+import { imageURLGenerator } from "@/lib/urlGenerator";
 
 type PageParams = {
   searchParams: { search?: string; page?: string };
 };
 
-const countImagesCache = cache(countImages);
-const getImagesCache = cache(getImages);
-
 export async function generateMetadata({
   searchParams,
 }: PageParams): Promise<Metadata> {
-  const count = await countImagesCache(searchParams.search);
+  // const count = await countImages(searchParams.search);
 
-  if (count === 0)
-    return {
-      title: `No images found for ${searchParams.search ?? ""}`,
-      description: `No images found for ${searchParams.search ?? ""}`,
-    };
+  // if (count === 0)
+  //   return {
+  //     title: `No images found ${
+  //       searchParams.search ? "for " + searchParams.search : ""
+  //     }`,
+  //   };
 
-  const availableImages: string = count
-    .toString()
-    .slice(0, 2)
-    .concat("0".repeat(count.toString().length - 2<0?0:count.toString().length - 2))
-    .concat("+");
+  // const availableImages: string = count
+  //   .toString()
+  //   .slice(0, 2)
+  //   .concat(
+  //     "0".repeat(
+  //       count.toString().length - 2 < 0 ? 0 : count.toString().length - 2
+  //     )
+  //   )
+  //   .concat("+");
 
-  const OGImages = await getImagesCache(0, 4, searchParams.search);
+  const OGImages = await getImages(0, 4, searchParams.search);
 
   return {
-    title: `${availableImages} ${
+    title: `${1000} ${
       searchParams.search ?? ""
     } photos available for free download`,
-    description: `${availableImages} ${
+    description: `${1000} AI generated ${
       searchParams.search ?? ""
-    } AI generated photos available for free download.`,
+    } photos available for free download.`,
     openGraph: {
       images: OGImages.map((image) => ({
-        url: image.url,
+        url: imageURLGenerator({
+          id: image.id,
+          prompt: image.prompt,
+          key: image.key,
+        }),
       })),
     },
   };
@@ -52,9 +59,9 @@ export default async function page({ searchParams }: PageParams) {
   const search = searchParams.search?.replace("+", " ");
   const skip = (currentPage - 1) * take;
 
-  const images = await getImagesCache(skip, take, search);
+  const images = await getImages(skip, take, search);
 
-  const count = await countImagesCache(search);
+  const count = 1000; // await countImages(search);
   const totalPage = Math.ceil(count / take);
 
   return (
@@ -63,7 +70,6 @@ export default async function page({ searchParams }: PageParams) {
         Explore Gallery <br />
         Find Your Imagination
       </h2>
-      {/* <div className="flex items-center justify-between"> */}
       {search ? (
         <h1 className="text-xl sm:text-2xl">
           Total {count} photos found for{" "}
@@ -76,14 +82,6 @@ export default async function page({ searchParams }: PageParams) {
         </h1>
       )}
 
-      {/* <select name="orientation" className="text-2xl focus:outline-none">
-          <option hidden>Orientation</option>
-          <option value="horizontal">Horizontal</option>
-          <option value="vertical">Vertical</option>
-          <option value="square">Square</option>
-          <option value="panoramic">Panoramic</option>
-        </select> */}
-      {/* </div> */}
       <Gallery images={images} />
       <div className="flex items-center justify-between text-xl">
         <p>

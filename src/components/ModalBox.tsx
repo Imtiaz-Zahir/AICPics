@@ -1,26 +1,34 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { context } from "@/app/Context";
 import ImageDetails from "./ImageDetails";
-import createURL from "@/lib/createURL";
+import { slugGenerator } from "@/lib/urlGenerator";
+import Gallery from "./Gallery";
+import { getSimilarImages } from "@/actions/imageAction";
+import type { ImageData } from "@/types/imageTypes";
 
 export default function ModalBox() {
   const appContext = useContext(context);
 
   const imageData = appContext?.imageData;
   const setImageData = appContext?.setImageData;
+  const [similarImages, setSimilarImages] = useState<ImageData[]>([]);
 
   useEffect(() => {
     function closeModelOnBack() {
       if (setImageData) setImageData(null);
       history.replaceState({}, "", window.location.pathname);
     }
+    async function SimilarImages() {
+      const images = await getSimilarImages(0, 10, imageData?.prompt.split(" ").slice(0, 3).join(" "));
+      setSimilarImages(images);
+    }
 
     if (imageData) {
       window.history.pushState(
         { modalOpen: true },
         "",
-        "/photos/" + createURL(imageData?.prompt ?? "", imageData?.id ?? "")
+        "/photos/" + slugGenerator(imageData?.prompt ?? "", imageData?.id ?? "")
       );
       document.title = `Free download - ${imageData?.prompt
         .split(/\s+/)
@@ -30,10 +38,12 @@ export default function ModalBox() {
       document.body.style.overflow = "hidden";
 
       window.addEventListener("popstate", closeModelOnBack);
+      SimilarImages();
 
       return () => window.removeEventListener("popstate", closeModelOnBack);
     } else {
       document.body.style.overflow = "auto";
+      setSimilarImages([]);
       if (setImageData) setImageData(null);
     }
   }, [setImageData, imageData]);
@@ -67,6 +77,10 @@ export default function ModalBox() {
         </button>
         <div className="w-[95%] mx-auto">
           <ImageDetails imageData={imageData} />
+          <h3 className="mt-10 mb-5 text-2xl font-medium">
+            You might also like
+          </h3>
+          <Gallery images={similarImages} />
         </div>
       </div>
     </section>

@@ -1,144 +1,241 @@
 import { PrismaClient } from "@prisma/client";
+import keyGenerator from "@/lib/keyGenerator";
+import type { ImageData } from "@/types/imageTypes";
+import { cache } from "react";
 
 const prisma = new PrismaClient();
 
 type Image = {
-  _id: string;
+  _id: { $oid: string };
+  massageID: string;
+  channelID: string;
+  attachmentID: string;
+  fileName: string;
+  expiresAt: string;
+  issuedAt: string;
+  signature: string;
   prompt: string;
   height: number;
   width: number;
   size: number;
-  url: string;
 };
 
-export async function getImages(skip: number, take: number, search?: string) {
-  if (search) {
-    const images = (await prisma.photos.aggregateRaw({
-      pipeline: [
-        {
-          $search: {
-            index: "default",
-            text: {
-              query: search,
-              path: {
-                wildcard: "*",
+export const getImages = cache(
+  async (skip: number, take: number, search?: string): Promise<ImageData[]> => {
+    const result: ImageData[] = [];
+    
+    if (search) {
+      const images = (await prisma.photos.aggregateRaw({
+        pipeline: [
+          {
+            $search: {
+              text: {
+                query: search,
+                path: "prompt",
               },
             },
           },
-        },
-        {
-          $project: {
-            _id: 1,
-            prompt: 1,
-            url: 1,
-            height: 1,
-            width: 1,
-            size: 1,
-            download: 1,
-            score: { $meta: "searchScore" },
+
+          { $skip: skip },
+          {
+            $limit: take,
           },
-        },
-        {
-          $sort: { score: -1 },
-        },
+          {
+            $project: {
+              _id: 1,
+              massageID: 1,
+              channelID: 1,
+              attachmentID: 1,
+              fileName: 1,
+              expiresAt: 1,
+              issuedAt: 1,
+              signature: 1,
+              prompt: 1,
+              height: 1,
+              width: 1,
+              size: 1,
+              download: 1,
+              score: { $meta: "searchScore" },
+            },
+          },
+          {
+            $match: {
+              score: { $gt: 5 },
+            },
+          },
+          { $sort: { download: -1 } },
+          { $unset: ["download", "score"] },
+        ],
+      })) as unknown as Image[];
 
-        { $skip: skip },
-        {
-          $limit: take,
+      images.forEach(async (image) =>
+        result.push({
+          id: image._id.$oid,
+          prompt: image.prompt,
+          key: await keyGenerator({ ...image }),
+          height: image.height,
+          width: image.width,
+          size: image.size,
+        })
+      );
+    } else {
+      const images = await prisma.photos.findMany({
+        take,
+        skip,
+        // where: search ? { prompt: { contains: search } } : undefined,
+        // orderBy: { download: "desc" },
+        select: {
+          id: true,
+          massageID: true,
+          prompt: true,
+          channelID: true,
+          attachmentID: true,
+          fileName: true,
+          expiresAt: true,
+          issuedAt: true,
+          signature: true,
+          height: true,
+          width: true,
+          size: true,
         },
-        { $sort: { download: -1 } },
-        { $unset: "download" },
-      ],
-    })) as unknown as Image[];
+      });
 
-    if (images) {
-      return images.map((image) => ({
-        id: image._id,
-        prompt: image.prompt,
-        url: image.url,
-        height: image.height,
-        width: image.width,
-        size: image.size,
-      }));
+      images.forEach(async (image) =>
+        result.push({
+          id: image.id,
+          prompt: image.prompt,
+          key: await keyGenerator(image),
+          height: image.height,
+          width: image.width,
+          size: image.size,
+        })
+      );
     }
+    return result;
   }
+);
 
-  return prisma.photos.findMany({
-    take,
-    skip,
-    // where: search ? { prompt: { contains: search } } : undefined,
-    orderBy: { download: "desc" },
-    select: {
-      id: true,
-      prompt: true,
-      url: true,
-      height: true,
-      width: true,
-      size: true,
-    },
-  });
-}
-
-export function getALLImagesIDAndPrompt() {
+export const getALLImagesIDAndPrompt = cache(async () => {
   return prisma.photos.findMany({
     select: { id: true, prompt: true },
+    take: 1000,
     orderBy: { download: "desc" },
   });
-}
+});
 
-export function getImageByID(id: string) {
-  return prisma.photos.findUnique({
-    where: { id },
-    select: {
-      url: true,
-      prompt: true,
-      height: true,
-      width: true,
-      size: true,
-      download: true,
-    },
-  });
-}
+export const getImageByID = cache(
+  async (id: string): Promise<ImageData | null> => {
+    const image = await prisma.photos.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        massageID: true,
+        prompt: true,
+        channelID: true,
+        attachmentID: true,
+        fileName: true,
+        expiresAt: true,
+        issuedAt: true,
+        signature: true,
+        height: true,
+        width: true,
+        size: true,
+      },
+    });
 
-export async function countImages(search?: string) {
+    if (!image) return null;
+
+    return {
+      id: image.id,
+      prompt: image.prompt,
+      key: await keyGenerator(image),
+      height: image.height,
+      width: image.width,
+      size: image.size,
+    };
+  }
+);
+
+export const countImages = cache(async (search?: string): Promise<number> => {
   if (search) {
     const result = (await prisma.photos.aggregateRaw({
       pipeline: [
         {
           $search: {
-            index: "default",
             text: {
               query: search,
-              path: {
-                wildcard: "*",
-              },
+              path: "prompt",
             },
           },
         },
         {
           $project: {
-            _id: 1,
             score: { $meta: "searchScore" },
+            // count:{
+            //   $cond: { if: { $gte: [ "score", 5 ] }, then: 1, else: 0 }
+            // }
           },
         },
-        {
-          $count: "total",
-        },
+        // {
+        //   $match: {
+        //     score: { $gt: 5 },
+        //   },
+        // },
+        // {
+        //   $count: "total",
+        // },
       ],
     })) as unknown as { total: number }[];
-
+console.log(result)
     if (result.length === 0) return 0;
 
     return result[0].total;
   }
   return prisma.photos.count({
-    where: search ? { prompt: { contains: search } } : undefined,
+    // where: search ? { prompt: { contains: search } } : undefined,
   });
-}
+});
 
-export function updateImageForDownload(id: string) {
-  return prisma.photos.update({
+export async function updateImageForDownload(
+  id: string
+): Promise<ImageData | null> {
+  const image = await prisma.photos.update({
     where: { id },
     data: { download: { increment: 1 } },
   });
+  if (!image) return null;
+
+  return {
+    id: image.id,
+    prompt: image.prompt,
+    key: await keyGenerator(image),
+    height: image.height,
+    width: image.width,
+    size: image.size,
+  };
+}
+
+export async function updateAttachmentByID(
+  massageID: string,
+  {
+    expiresAt,
+    issuedAt,
+    signature,
+  }: { expiresAt: string; issuedAt: string; signature: string }
+): Promise<ImageData | null> {
+  const image = await prisma.photos.update({
+    where: { massageID },
+    data: { expiresAt, issuedAt, signature },
+  });
+
+  if (!image) return null;
+
+  return {
+    id: image.id,
+    prompt: image.prompt,
+    key: await keyGenerator(image),
+    height: image.height,
+    width: image.width,
+    size: image.size,
+  };
 }

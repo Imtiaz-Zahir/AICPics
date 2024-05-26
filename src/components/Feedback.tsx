@@ -19,7 +19,7 @@ export default function Feedback() {
 
   return (
     <div>
-      <h3 className="text-lg font-semibold">Gave Your Opinion</h3>
+      <h3 className="text-lg font-semibold">Share Your Opinion</h3>
       <form
         onSubmit={saveFeedback}
         className="flex flex-col gap-3 mt-5 text-black"

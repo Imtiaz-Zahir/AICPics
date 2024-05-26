@@ -1,6 +1,6 @@
 type ImageData = {
   id: string;
-  url: string;
+  key: string;
   prompt: string;
   height: number;
   width: number;

@@ -28,7 +28,7 @@ export default async function page() {
       </section>
       <section className="flex flex-col lg:flex-row justify-between items-center w-2/3 mx-auto gap-5">
         <div className="flex flex-col justify-center items-center">
-          <h4 className="text-5xl text-red-600 font-bold">15,000+</h4>
+          <h4 className="text-5xl text-red-600 font-bold">200K+</h4>
           <p className="text-xl font-semibold my-2">Available Image</p>
         </div>
         <div className="flex flex-col justify-center items-center">
