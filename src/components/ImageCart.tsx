@@ -26,7 +26,7 @@ export default function ImageCart({ imageData }: { imageData: ImageData }) {
             key: imageData.key,
             prompt: imageData.prompt,
             width: 437,
-            height: Math.round((imageData.height * 400) / imageData.width),
+            height: Math.round((imageData.height * 437) / imageData.width),
           })}
           height={437}
           width={437}

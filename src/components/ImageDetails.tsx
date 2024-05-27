@@ -24,7 +24,7 @@ export default function ImageDetailsContainer({
               key: imageData.key,
               prompt: imageData.prompt,
               width: 800,
-              height: height,
+              height: Math.round((imageData.height * 800) / imageData.width),
             })}
             height={height}
             width={width}
@@ -42,10 +42,10 @@ export default function ImageDetailsContainer({
         {/* <div className="flex items-center justify-center w-full aspect-square border rounded overflow-hidden"></div> */}
         <ul className="my-5 text-lg flex flex-col gap-1">
           <li>
-            Height : <span className="font-medium">{imageData.height} Px</span>
+            Height : <span className="font-medium">{imageData.height} px</span>
           </li>
           <li>
-            Width : <span className="font-medium">{imageData.width} PX</span>
+            Width : <span className="font-medium">{imageData.width} px</span>
           </li>
           <li>
             Size :{" "}

@@ -12,7 +12,7 @@ export function imageURLGenerator({
   height?: number;
 }) {
   const url =
-    "https://d2l6h3yyytguvl.cloudfront.net/" +
+    "https://d280om8rayd0ye.cloudfront.net/" +
     slugGenerator(prompt, id, true) +
     "?key=" +
     key +

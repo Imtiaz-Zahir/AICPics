@@ -12,29 +12,29 @@ type PageParams = {
 export async function generateMetadata({
   searchParams,
 }: PageParams): Promise<Metadata> {
-  // const count = await countImages(searchParams.search);
+  const count = await countImages(searchParams.search);
 
-  // if (count === 0)
-  //   return {
-  //     title: `No images found ${
-  //       searchParams.search ? "for " + searchParams.search : ""
-  //     }`,
-  //   };
+  if (count === 0)
+    return {
+      title: `No images found ${
+        searchParams.search ? "for " + searchParams.search : ""
+      }`,
+    };
 
-  // const availableImages: string = count
-  //   .toString()
-  //   .slice(0, 2)
-  //   .concat(
-  //     "0".repeat(
-  //       count.toString().length - 2 < 0 ? 0 : count.toString().length - 2
-  //     )
-  //   )
-  //   .concat("+");
+  const availableImages: string = count
+    .toString()
+    .slice(0, 2)
+    .concat(
+      "0".repeat(
+        count.toString().length - 2 < 0 ? 0 : count.toString().length - 2
+      )
+    )
+    .concat("+");
 
   const OGImages = await getImages(0, 4, searchParams.search);
 
   return {
-    title: `${1000} ${
+    title: `${availableImages} ${
       searchParams.search ?? ""
     } photos available for free download`,
     description: `${1000} AI generated ${
@@ -61,7 +61,7 @@ export default async function page({ searchParams }: PageParams) {
 
   const images = await getImages(skip, take, search);
 
-  const count = 1000; // await countImages(search);
+  const count = await countImages(search);
   const totalPage = Math.ceil(count / take);
 
   return (
