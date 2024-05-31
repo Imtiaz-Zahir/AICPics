@@ -24,66 +24,66 @@ export const getImages = cache(
   async (skip: number, take: number, search?: string): Promise<ImageData[]> => {
     const result: ImageData[] = [];
 
-    if (search) {
-      const images = (await prisma.photos.aggregateRaw({
-        pipeline: [
-          {
-            $search: {
-              text: {
-                query: search,
-                path: "prompt",
-              },
-            },
-          },
+    // if (search) {
+    //   const images = (await prisma.photos.aggregateRaw({
+    //     pipeline: [
+    //       {
+    //         $search: {
+    //           text: {
+    //             query: search,
+    //             path: "prompt",
+    //           },
+    //         },
+    //       },
 
-          { $skip: skip },
-          {
-            $limit: take,
-          },
-          {
-            $project: {
-              _id: 1,
-              massageID: 1,
-              channelID: 1,
-              attachmentID: 1,
-              fileName: 1,
-              expiresAt: 1,
-              issuedAt: 1,
-              signature: 1,
-              prompt: 1,
-              height: 1,
-              width: 1,
-              size: 1,
-              download: 1,
-              score: { $meta: "searchScore" },
-            },
-          },
-          // {
-          //   $match: {
-          //     score: { $gt: 5 },
-          //   },
-          // },
-          { $sort: { download: -1 } },
-          { $unset: ["download", "score"] },
-        ],
-      })) as unknown as Image[];
+    //       { $skip: skip },
+    //       {
+    //         $limit: take,
+    //       },
+    //       {
+    //         $project: {
+    //           _id: 1,
+    //           massageID: 1,
+    //           channelID: 1,
+    //           attachmentID: 1,
+    //           fileName: 1,
+    //           expiresAt: 1,
+    //           issuedAt: 1,
+    //           signature: 1,
+    //           prompt: 1,
+    //           height: 1,
+    //           width: 1,
+    //           size: 1,
+    //           download: 1,
+    //           // score: { $meta: "searchScore" },
+    //         },
+    //       },
+    //       // {
+    //       //   $match: {
+    //       //     score: { $gt: 5 },
+    //       //   },
+    //       // },
+    //       { $sort: { download: -1 } },
+    //       { $unset: ["download"] },
+    //     ],
+    //   })) as unknown as Image[];
 
-      images.forEach(async (image) =>
-        result.push({
-          id: image._id.$oid,
-          prompt: image.prompt,
-          key: await keyGenerator({ ...image }),
-          height: image.height,
-          width: image.width,
-          size: image.size,
-        })
-      );
-    } else {
+    //   images.forEach(async (image) =>
+    //     result.push({
+    //       id: image._id.$oid,
+    //       prompt: image.prompt,
+    //       key: await keyGenerator({ ...image }),
+    //       height: image.height,
+    //       width: image.width,
+    //       size: image.size,
+    //     })
+    //   );
+    // } else {
       const images = await prisma.photos.findMany({
         take,
         skip,
-        // where: search ? { prompt: { contains: search } } : undefined,
-        // orderBy: { download: "desc" },
+        where: search ? { prompt: { contains: search } } : undefined,
+        orderBy: { download: "desc" },
         select: {
           id: true,
           massageID: true,
@@ -110,48 +110,45 @@ export const getImages = cache(
           size: image.size,
         })
       );
-    }
+    // }
     return result;
   }
 );
 
-export const countImages = cache(async (search?: string): Promise<number> => {
-  if (search) {
-    const result = (await prisma.photos.aggregateRaw({
-      pipeline: [
-        {
-          $search: {
-            text: {
-              query: search,
-              path: "prompt",
-            },
-          },
-        },
-        {
-          $project: {
-            score: { $meta: "searchScore" },
-            // count:{
-            //   $cond: { if: { $gte: [ "score", 5 ] }, then: 1, else: 0 }
-            // }
-          },
-        },
-        // {
-        //   $match: {
-        //     score: { $gt: 5 },
-        //   },
-        // },
-        {
-          $count: "total",
-        },
-      ],
-    })) as unknown as { total: number }[];
+export const countImages = cache(async (search?: string) => {
+  // if (search) {
+  //   const result = (await prisma.photos.aggregateRaw({
+  //     pipeline: [
+  //       {
+  //         $search: {
+  //           text: {
+  //             query: search,
+  //             path: "prompt",
+  //           },
+  //         },
+  //       },
+  //       // {
+  //       //   $project: {
+  //       //     score: { $meta: "searchScore" },
+  //       //   },
+  //       // },
+  //       // {
+  //       //   $match: {
+  //       //     score: { $gt: 5 },
+  //       //   },
+  //       // },
+  //       {
+  //         $count: "total",
+  //       },
+  //     ],
+  //   })) as unknown as { total: number }[];
 
-    if (result.length === 0) return 0;
+  //   if (result.length === 0) return 0;
 
-    return result[0].total;
-  }
+  //   return result[0].total
+  // }
   return prisma.photos.count({
-    // where: search ? { prompt: { contains: search } } : undefined,
+    where: search ? { prompt: { contains: search } } : undefined,
   });
 });
 
