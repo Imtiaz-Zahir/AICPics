@@ -54,3 +54,10 @@ model feedbacks {
   email   String
   message String
 }
+
+model searches {
+  search    String   @id @map("_id")
+  count     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

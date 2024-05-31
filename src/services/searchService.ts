@@ -1,34 +1,27 @@
-// 'use server';
-// import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-// function createSearch(data: Prisma.searchCreateInput) {
-//   return prisma.search.create({ data });
-// }
+export function createSearch(search: string) {
+  return prisma.searches.create({ data: { search } });
+}
 
-// function getSearches(where?: Prisma.searchWhereInput) {
-//   return prisma.search.findMany({
-//     where,
-//     take: 5,
-//     orderBy: { total: "asc" },
-//     select: { query: true },
-//   });
-// }
+export function getSearches(search: string) {
+  return prisma.searches.findMany({
+    where: { search: { startsWith: search } },
+    take: 5,
+    orderBy: { count: "asc" },
+    select: { search: true },
+  });
+}
 
-// function getSearch(where: Prisma.searchWhereUniqueInput) {
-//   return prisma.search.findUnique({ where });
-// }
+export function getSearch(search: string) {
+  return prisma.searches.findUnique({ where: { search } });
+}
 
-// function updateSearch(
-//   where: Prisma.searchWhereUniqueInput,
-//   data: Prisma.searchUpdateInput
-// ) {
-//   return prisma.search.update({ where, data });
-// }
-
-// function deleteSearch(where: Prisma.searchWhereUniqueInput) {
-//   return prisma.search.delete({ where });
-// }
-
-// export { createSearch, getSearches, getSearch, updateSearch, deleteSearch };
+export function updateSearch(search: string) {
+  return prisma.searches.update({
+    where: { search },
+    data: { count: { increment: 1 } },
+  });
+}
