@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { storeSearch, suggestionsAction } from "@/actions/searchAction";
 
 export default function Search({ hero }: { hero?: boolean }) {
@@ -9,18 +9,18 @@ export default function Search({ hero }: { hero?: boolean }) {
   const [isFocused, setIsFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams().get("search");
+  const params = useParams();
 
   useEffect(() => {
     setIsLoading(false);
-  }, [searchParams]);
+  }, [params]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (isLoading) return;
 
     const currentSearch = search.replace(/\s/g, "+").toLowerCase();
-    if (searchParams !== currentSearch) setIsLoading(true);
+    setIsLoading(true);
 
     if (search.length === 0) {
       router.push("/photos");
@@ -114,15 +114,13 @@ export default function Search({ hero }: { hero?: boolean }) {
               key={index}
               className="hover:bg-[#363636] px-5 py-1 font-medium text-white cursor-pointer"
               onClick={() => {
-                if (searchParams !== suggestion) {
-                  setSearch(suggestion.replace("+", " "));
-                  setIsFocused(false);
-                  router.push(`/photos?search=${suggestion}`);
-                  setIsLoading(true);
-                }
+                setSearch(suggestion.replace("+", " "));
+                setIsFocused(false);
+                router.push(`/photos?search=${suggestion}`);
+                setIsLoading(true);
               }}
             >
-              {suggestion}
+              {suggestion.replace("+", " ")}
             </li>
           ))}
         </ul>
