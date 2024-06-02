@@ -21,6 +21,7 @@ export default function Search({ hero }: { hero?: boolean }) {
 
     const currentSearch = search.replace(/\s/g, "+").toLowerCase();
     setIsLoading(true);
+    setIsFocused(false);
 
     if (search.length === 0) {
       router.push("/photos");
@@ -31,13 +32,17 @@ export default function Search({ hero }: { hero?: boolean }) {
   }
 
   useEffect(() => {
-    if (search.length > 0) {
-      suggestionsAction(search.replace(/\s/g, "+").toLowerCase()).then((res) =>
-        setSearchSuggestions(res)
-      );
-    } else {
-      setSearchSuggestions([]);
-    }
+    const timeout = setTimeout(() => {
+      if (search.length > 0) {
+        suggestionsAction(search).then((response) => {
+          setSearchSuggestions(response);
+        });
+      } else {
+        setSearchSuggestions([]);
+      }
+    }, 300);
+
+    return () => clearTimeout(timeout);
   }, [search]);
 
   return (
@@ -114,13 +119,13 @@ export default function Search({ hero }: { hero?: boolean }) {
               key={index}
               className="hover:bg-[#363636] px-5 py-1 font-medium text-white cursor-pointer"
               onClick={() => {
-                setSearch(suggestion.replace("+", " "));
+                setSearch(suggestion.replaceAll("+", " "));
                 setIsFocused(false);
                 router.push(`/photos?search=${suggestion}`);
                 setIsLoading(true);
               }}
             >
-              {suggestion.replace("+", " ")}
+              {suggestion.replaceAll("+", " ")}
             </li>
           ))}
         </ul>

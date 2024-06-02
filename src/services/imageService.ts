@@ -155,7 +155,7 @@ export const countImages = cache(async (search?: string) => {
 export const getALLImagesIDAndPrompt = cache(async () => {
   return prisma.photos.findMany({
     select: { id: true, prompt: true },
-    take: 1000,
+    take: 10000,
     orderBy: { download: "desc" },
   });
 });
