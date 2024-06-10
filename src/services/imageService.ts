@@ -83,7 +83,7 @@ export const getImages = cache(
         take,
         skip,
         where: search ? { prompt: { contains: search } } : undefined,
-        orderBy: { download: "desc" },
+        orderBy: search?{ download: "desc" }:undefined,
         select: {
           id: true,
           massageID: true,
