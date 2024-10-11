@@ -4,27 +4,45 @@ import { context } from "@/app/Context";
 import ImageDetails from "./ImageDetails";
 import { slugGenerator } from "@/lib/urlGenerator";
 import Gallery from "./Gallery";
-import { getSimilarImages } from "@/actions/imageAction";
 import type { ImageData } from "@/types/imageTypes";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+if (!API_URL) throw new Error("API_URL is not defined");
 
 export default function ModalBox() {
   const appContext = useContext(context);
 
-  const imageData = appContext?.imageData;
-  const setImageData = appContext?.setImageData;
+  const imageId = appContext?.imageId;
+  const setImageId = appContext?.setImageId;
+  const [imageData, setImageData] = useState<{
+    id: string;
+    prompt: string;
+    height: number;
+    width: number;
+    size: number;
+  } | null>(null);
   const [similarImages, setSimilarImages] = useState<ImageData[]>([]);
 
   useEffect(() => {
     function closeModelOnBack() {
-      if (setImageData) setImageData(null);
+      if (setImageId) setImageId(null);
       history.replaceState({}, "", window.location.pathname);
     }
+
     async function SimilarImages() {
-      const images = await getSimilarImages(0, 10, imageData?.prompt.split(" ").slice(0, 3).join(" "));
-      setSimilarImages(images);
+      // const images = await getSimilarImages(0, 10, imageData?.prompt.split(" ").slice(0, 3).join(" "));
+      // setSimilarImages(images);
     }
 
-    if (imageData) {
+    async function getImageData() {
+      const res = await fetch(API_URL + "/images/" + imageId);
+      const data = await res.json();
+      setImageData(data);
+    }
+
+    if (imageId) {
+      getImageData();
+
       window.history.pushState(
         { modalOpen: true },
         "",
@@ -48,14 +66,14 @@ export default function ModalBox() {
     }
   }, [setImageData, imageData]);
 
-  if (!imageData || !setImageData) return null;
+  if (!imageId || !setImageId || !imageData) return null;
 
   return (
     <section className="fixed w-full h-screen bg-[#00000080] flex items-center justify-center z-20">
       <div className="bg-white py-10 rounded-lg w-[90%] h-[90vh] overflow-y-scroll">
         <button
           onClick={() => {
-            setImageData(null);
+            setImageId(null);
             window.history.back();
           }}
           className="absolute top-2 right-2 text-white bg-red-600 p-2 rounded-full"

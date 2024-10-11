@@ -7,6 +7,7 @@ import type { ImageData } from "@/types/imageTypes";
 export default function Gallery({ images }: { images: ImageData[] }) {
   const [width, setWidth] = useState<number>(1279);
   const galleryComponent = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     setWidth(galleryComponent.current?.offsetWidth || 1279);
   }, []);

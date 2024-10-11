@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { storeSearch, suggestionsAction } from "@/actions/searchAction";
+// import { storeSearch, suggestionsAction } from "@/actions/searchAction";
 
 export default function Search({ hero }: { hero?: boolean }) {
   const [search, setSearch] = useState("");
@@ -27,16 +27,16 @@ export default function Search({ hero }: { hero?: boolean }) {
       router.push("/photos");
     } else {
       router.push(`/photos?search=${currentSearch}`);
-      storeSearch(currentSearch);
+      // storeSearch(currentSearch);
     }
   }
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (search.length > 0) {
-        suggestionsAction(search).then((response) => {
-          setSearchSuggestions(response);
-        });
+        // suggestionsAction(search).then((response) => {
+        //   setSearchSuggestions(response);
+        // });
       } else {
         setSearchSuggestions([]);
       }
@@ -47,7 +47,7 @@ export default function Search({ hero }: { hero?: boolean }) {
 
   return (
     <form
-      className="flex items-center relative w-3/4 lg:w-2/4"
+      className="flex items-center relative w-3/4 lg:w-2/4 text-black"
       onSubmit={handleSubmit}
     >
       {isLoading ? (

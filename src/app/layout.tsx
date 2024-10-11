@@ -32,11 +32,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className + " flex flex-col gap-y-20 mx-auto"}>
+      <body className={roboto.className + " flex flex-col gap-y-20 mx-auto bg-[#050505] text-white"}>
         <Context>
           <Nav />
           {children}
-          <ModalBox />
+          {/* <ModalBox /> */}
         </Context>
         <Footer />
         <Analytics />

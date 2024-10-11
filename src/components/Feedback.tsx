@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import contactActon from "@/actions/contactAction";
+// import contactActon from "@/actions/contactAction";
 
 export default function Feedback() {
   const [email, setEmail] = useState("");
@@ -9,12 +9,12 @@ export default function Feedback() {
   async function saveFeedback(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email || !message) return alert("Please fill all the fields");
-    const res = await contactActon(email, message);
-    alert(res);
-    if(res === "Feedback saved successfully!") {
-      setEmail("");
-      setMassage("");
-    }
+    // const res = await contactActon(email, message);
+    // alert(res);
+    // if(res === "Feedback saved successfully!") {
+    //   setEmail("");
+    //   setMassage("");
+    // }
   }
 
   return (

@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { signIn, signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
+// import { signIn, signOut } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 export default function Auth() {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   return (
     <div>
-      {session ? (
+      {/* {session ? (
         <div className="group">
           <button
             type="button"
@@ -33,10 +33,10 @@ export default function Auth() {
             {session.user?.email ?? "no email found"}
           </span>
         </div>
-      ) : (
+      ) : ( */}
         <button
           type="button"
-          onClick={() => signIn("google")}
+          // onClick={() => signIn("google")}
           className="bg-black text-white py-2 px-5 rounded flex items-center gap-2 font-medium"
         >
           <svg
@@ -64,7 +64,7 @@ export default function Auth() {
           </svg>
           Sign in
         </button>
-      )}
+      {/* )} */}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import Link from "next/link";
 export default async function page() {
   return (
     <>
-      <section className="border rounded-xl flex flex-col justify-center items-center gap-2 lg:gap-5 w-[95%] mx-auto mt-20 py-20 lg:py-44 relative overflow-hidden">
+      <section className="rounded-xl flex flex-col justify-center items-center gap-2 lg:gap-5 w-[95%] mx-auto mt-24 py-20 lg:py-44 relative overflow-hidden">
         <h1 className="text-2xl sm:text-7xl font-bold text-center text-white">
           Search Throw <span className="text-red-600">200K+</span>
           <br /> AI Generated Photos
@@ -45,9 +45,9 @@ export default async function page() {
           The Beauty of AI-Generated Images
         </h1>
         <p className="text-2xl my-5">Here are Some Stunning AI Creations</p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 mb-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
           {creations.map((c, index) => (
-            <div key={index} className="w-full flex flex-col gap-1">
+            <div key={index} className="w-full flex flex-col gap-3">
               {c.map(({ alt, url }, index) => (
                 <Link
                   key={index}

@@ -2,33 +2,35 @@ import React from "react";
 import Prompt from "@/components/Prompt";
 import Favorite from "@/components/Favorite";
 import type { ImageData } from "@/types/imageTypes";
-import { imageURLGenerator } from "@/lib/urlGenerator";
+import { slugGenerator } from "@/lib/urlGenerator";
 import Download from "@/components/Download";
 import Image from "next/image";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+if (!API_URL) throw new Error("API_URL is not defined");
 
 export default function ImageDetailsContainer({
   imageData,
 }: {
-  imageData: ImageData;
+  imageData: {
+    id: string;
+    prompt: string;
+    height: number;
+    width: number;
+    size: number;
+  };
 }) {
-  const height = Math.round((imageData.height * 800) / imageData.width);
-  const width = imageData.width > 800 ? 800 : imageData.width;
-
   return (
     <div className="flex flex-col lg:flex-row gap-10">
       <div className="lg:w-3/4 h-full">
         <div className="flex justify-center w-full max-h-[80vh] border rounded-lg overflow-hidden relative">
           <Image
-            src={imageURLGenerator({
-              id: imageData.id,
-              key: imageData.key,
-              prompt: imageData.prompt,
-              width: 800,
-              height: Math.round((imageData.height * 800) / imageData.width),
-            })}
-            height={height}
-            width={width}
-            style={{objectFit:"contain"}}
+            src={API_URL+"/photos/"+slugGenerator(imageData?.prompt??"", imageData.id, 800)}
+            // height={height}
+            // width={width}
+            height={800}
+            width={800}
+            style={{ objectFit: "contain" }}
             priority={true}
             alt={imageData.prompt}
             unoptimized={true}

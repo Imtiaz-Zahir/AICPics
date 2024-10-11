@@ -1,24 +1,23 @@
 "use client";
 import { createContext, useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import { SessionProvider } from "next-auth/react";
-import type { ImageData } from "@/types/imageTypes";
+// import { SessionProvider } from "next-auth/react";
 
 type ContextProps = {
-  imageData: ImageData | null;
-  setImageData: Dispatch<SetStateAction<ImageData | null>>;
-  favorites: ImageData[];
-  setFavorites: Dispatch<SetStateAction<ImageData[]>>;
+  imageId: string | null;
+  setImageId: Dispatch<SetStateAction<string | null>>;
+  favorites: string[];
+  setFavorites: Dispatch<SetStateAction<string[]>>;
 };
 
 export const context = createContext<ContextProps | null>(null);
 
 export function Context({ children }: { children: React.ReactNode }) {
-  const [imageData, setImageData] = useState<ImageData | null>(null);
-  const [favorites, setFavorites] = useState<ImageData[]>([]);
+  const [imageId, setImageId] = useState<string | null>(null);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
-    const favoritesImages: ImageData[] = JSON.parse(
+    const favoritesImages: string[] = JSON.parse(
       localStorage.getItem("favorites") || "[]"
     );
     setFavorites(favoritesImages);
@@ -31,13 +30,14 @@ export function Context({ children }: { children: React.ReactNode }) {
   return (
     <context.Provider
       value={{
-        imageData,
-        setImageData,
+        imageId,
+        setImageId,
         favorites,
         setFavorites,
       }}
     >
-      <SessionProvider>{children}</SessionProvider>
+    {children}
+      {/* <SessionProvider>{children}</SessionProvider> */}
     </context.Provider>
   );
 }

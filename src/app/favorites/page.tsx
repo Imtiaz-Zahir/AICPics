@@ -25,7 +25,7 @@ export default function Page() {
         {favorites.length === 0 ? "No" : `Total ${favorites.length}`} photos
         found in your favorites list
       </p>
-      <Gallery images={favorites} />
+      {/* <Gallery images={favorites} /> */}
     </section>
   );
 }
