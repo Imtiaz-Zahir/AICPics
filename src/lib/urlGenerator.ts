@@ -27,5 +27,5 @@ export function slugGenerator(prompt: string, id: string, width?: number) {
     .slice(0, 7)
     .join("-")
     .toLowerCase()
-    .concat(`_${id}${width ? ".webp?width:" + width : ".html"}`);
+    .concat(`_${id}${width ? ".webp?width=" + width : ".html"}`);
 }
