@@ -2,24 +2,25 @@
 import { createContext, useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 // import { SessionProvider } from "next-auth/react";
+import type { ImageData } from "@/types/imageTypes";
 
 type ContextProps = {
   imageId: string | null;
   setImageId: Dispatch<SetStateAction<string | null>>;
-  favorites: string[];
-  setFavorites: Dispatch<SetStateAction<string[]>>;
+  favorites: ImageData[];
+  setFavorites: Dispatch<SetStateAction<ImageData[]>>;
 };
 
 export const context = createContext<ContextProps | null>(null);
 
 export function Context({ children }: { children: React.ReactNode }) {
   const [imageId, setImageId] = useState<string | null>(null);
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<
+    ImageData[]
+  >([]);
 
   useEffect(() => {
-    const favoritesImages: string[] = JSON.parse(
-      localStorage.getItem("favorites") || "[]"
-    );
+    const favoritesImages: ImageData[] = JSON.parse(localStorage.getItem("favorites") || "[]");
     setFavorites(favoritesImages);
   }, []);
 
@@ -36,7 +37,7 @@ export function Context({ children }: { children: React.ReactNode }) {
         setFavorites,
       }}
     >
-    {children}
+      {children}
       {/* <SessionProvider>{children}</SessionProvider> */}
     </context.Provider>
   );
